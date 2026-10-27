@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FiberPulse Broadband &bull; ISP Automation Platform</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a th:href="@{/}" class="nav-brand">
+        <span class="logo-icon">⚡</span>
+        <span>FiberPulse Broadband</span>
+    </a>
+    <nav class="nav-links">
+        <a th:href="@{/portal(code='CUST-1001')}" class="btn btn-secondary">Subscriber Portal</a>
+        <a th:href="@{/admin}" class="btn btn-primary">NOC Operations Console &rarr;</a>
+    </nav>
+</header>
+
+<main class="container">
+    <!-- Hero Header -->
+    <div style="text-align: center; margin: 3rem auto 3.5rem; max-width: 800px;">
+        <div class="badge badge-open" style="margin-bottom: 1rem; padding: 0.4rem 1rem;">
+            Automated Billing Cron &bull; Fiber Lifecycle &bull; NOC Ticketing
+        </div>
+        <h1 style="font-size: 2.75rem; line-height: 1.2; margin-bottom: 1.25rem;">
+            Next-Gen Gigabit Broadband &amp; Automated ISP Billing Engine
+        </h1>
+        <p style="font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 2rem;">
+            Featuring <code>@Scheduled</code> recurring invoice generation, dynamic plan tier provisioning,
+            self-service customer billing payments, and NOC support ticket lifecycle tracking.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a th:href="@{/portal(code='CUST-1001')}" class="btn btn-primary" style="padding: 0.8rem 1.8rem; font-size: 1rem;">
+                Launch Subscriber Portal &rarr;
+            </a>
+            <a th:href="@{/admin}" class="btn btn-secondary" style="padding: 0.8rem 1.8rem; font-size: 1rem;">
+                NOC Operations Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- Quick Demo Subscriber Switcher -->
+    <div class="card" style="margin-bottom: 3rem; border: 1px solid rgba(6, 182, 212, 0.3);">
+        <div class="page-header" style="margin-bottom: 1rem;">
+            <div>
+                <h3>⚡ Demo Subscribers (1-Click Portal Access)</h3>
+                <p class="page-subtitle">Select any active subscriber to preview their personalized dashboard, invoices, and tickets</p>
+            </div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+            <div th:each="c : ${customers}" style="background: rgba(0,0,0,0.3); padding: 1.25rem; border-radius: 12px; border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <code style="color: var(--cyan); font-weight: 700;" th:text="${c.customerCode}">CUST-1001</code>
+                        <span class="badge badge-active" th:text="${c.status}">ACTIVE</span>
+                    </div>
+                    <h4 style="margin-bottom: 0.25rem;" th:text="${c.name}">Johnathan Swift</h4>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary);" th:text="${c.currentPlan != null ? c.currentPlan.name : 'No Plan'}">Family Ultra 300</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;" th:text="${c.installationAddress}">742 Evergreen Terr</div>
+                </div>
+                <div style="margin-top: 1.25rem; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">OUTSTANDING</div>
+                        <strong style="color: var(--rose);" th:text="'$' + ${c.balance}">$58.99</strong>
+                    </div>
+                    <a th:href="@{/portal(code=${c.customerCode})}" class="btn btn-secondary btn-sm">Enter Portal &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Plans Showcase Grid -->
+    <div class="card">
+        <div class="page-header" style="margin-bottom: 1.5rem;">
+            <div>
+                <h3>FiberPulse Broadband Plans</h3>
+                <p class="page-subtitle">Symmetrical fiber speeds, zero throttling, and 24/7 dedicated NOC monitoring</p>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;">
+            <div th:each="p : ${plans}" class="card" style="background: rgba(22, 34, 58, 0.5); display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div class="badge badge-open" style="margin-bottom: 0.75rem;" th:text="${p.tier.displayName}">Standard Fiber</div>
+                    <h3 style="margin-bottom: 0.25rem;" th:text="${p.name}">Family Ultra 300</h3>
+                    <div style="font-size: 2.2rem; font-weight: 800; color: var(--cyan); margin: 0.75rem 0;">
+                        <span th:text="${p.speedMbps}">300</span> <span style="font-size: 1rem; color: var(--text-secondary); font-weight: 500;">Mbps</span>
+                    </div>
+                    <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;" th:text="${p.description}">
+                        300 Mbps unlimited symmetrical fiber
+                    </div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">
+                        FUP Limit: <strong style="color: var(--text-primary);" th:text="${p.isUnlimited() ? 'Unlimited Data' : p.dataLimitGb + ' GB'}">Unlimited</strong>
+                    </div>
+                </div>
+                <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <span style="font-size: 1.4rem; font-weight: 800; color: var(--emerald);" th:text="'$' + ${p.monthlyPrice}">$49.99</span>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">/month</span>
+                    </div>
+                    <a th:href="@{/portal(code='CUST-1001')}" class="btn btn-primary btn-sm">Subscribe</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 FiberPulse Broadband &bull; ISP Automation System &bull; Spring Boot 3 &amp; @Scheduled Engine</p>
+</footer>
+
+</body>
+</html>

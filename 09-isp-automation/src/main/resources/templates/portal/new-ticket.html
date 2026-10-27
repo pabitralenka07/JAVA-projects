@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Support Ticket - FiberPulse Broadband</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a th:href="@{/portal(code=${customer.customerCode})}" class="nav-brand">
+        <span class="logo-icon">⚡</span>
+        <span>FiberPulse &bull; Subscriber Self-Service</span>
+    </a>
+    <nav class="nav-links">
+        <a th:href="@{/portal/tickets(code=${customer.customerCode})}" class="btn btn-secondary btn-sm">&larr; Back to Tickets</a>
+    </nav>
+</header>
+
+<main class="container" style="max-width: 680px; margin-top: 2rem;">
+    <div th:if="${errorMessage}" class="alert alert-error">
+        <span>⚠️</span>
+        <span th:text="${errorMessage}">Error message</span>
+    </div>
+
+    <div class="card" style="padding: 2.25rem;">
+        <div style="margin-bottom: 2rem;">
+            <div class="badge badge-open" style="margin-bottom: 0.5rem;">NOC Incident Dispatch</div>
+            <h2 style="font-size: 1.6rem; margin-bottom: 0.25rem;">Open Support Ticket</h2>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                Submitting for subscriber: <strong style="color: var(--text-primary);" th:text="${customer.name}">Johnathan Swift</strong>
+                (<code th:text="${customer.customerCode}">CUST-1001</code>)
+            </p>
+        </div>
+
+        <form th:action="@{/portal/tickets}" method="post">
+            <input type="hidden" name="code" th:value="${customer.customerCode}">
+
+            <div class="form-group">
+                <label for="subject">Issue Summary / Subject *</label>
+                <input type="text" id="subject" name="subject" required placeholder="e.g. Red LOS indicator on fiber ONT, Packet loss in evening">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category">
+                        <option value="Broadband Connectivity">Broadband Connectivity</option>
+                        <option value="Slow Speed / Latency">Slow Speed / Latency</option>
+                        <option value="Hardware / Wi-Fi Router">Hardware / Wi-Fi Router</option>
+                        <option value="Billing &amp; Invoice">Billing &amp; Invoice</option>
+                        <option value="Static IP / DNS">Static IP / DNS</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="priority">Urgency Priority</label>
+                    <select id="priority" name="priority">
+                        <option value="LOW">Low - General Inquiry</option>
+                        <option value="MEDIUM" selected>Medium - Degraded Speed</option>
+                        <option value="HIGH">High - Frequent Disconnections</option>
+                        <option value="CRITICAL">Critical - Complete Outage / LOS</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Detailed Incident Description *</label>
+                <textarea id="description" name="description" rows="4" required placeholder="Describe what lights appear on the ONT modem, when the issue began, affected devices..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 0.75rem; font-size: 1rem; margin-top: 1rem;">
+                🚀 Submit Incident Ticket to NOC &rarr;
+            </button>
+        </form>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 FiberPulse Broadband &bull; Technical Support</p>
+</footer>
+
+</body>
+</html>

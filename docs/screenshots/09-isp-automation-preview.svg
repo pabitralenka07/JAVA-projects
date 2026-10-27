@@ -1,0 +1,176 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070d19"/>
+      <stop offset="50%" stop-color="#0c1527"/>
+      <stop offset="100%" stop-color="#070d19"/>
+    </linearGradient>
+
+    <!-- Cyan Glow -->
+    <radialGradient id="glowCyan" cx="15%" cy="15%" r="40%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Purple Glow -->
+    <radialGradient id="glowPurple" cx="85%" cy="85%" r="45%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Card Background Gradient -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#16223a" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#0c1527" stop-opacity="0.85"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Base Canvas -->
+  <rect width="1200" height="800" fill="url(#bgGrad)"/>
+  <rect width="1200" height="800" fill="url(#glowCyan)"/>
+  <rect width="1200" height="800" fill="url(#glowPurple)"/>
+
+  <!-- Top Navigation Bar -->
+  <rect x="0" y="0" width="1200" height="70" fill="#070d19" fill-opacity="0.9" stroke="#1e293b" stroke-opacity="0.4"/>
+  <text x="50" y="44" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="800" fill="#f8fafc">
+    ⚡ FiberPulse <tspan fill="#06b6d4">Broadband Operations</tspan>
+  </text>
+  <rect x="400" y="24" width="160" height="26" rx="13" fill="#06b6d4" fill-opacity="0.15" stroke="#06b6d4" stroke-opacity="0.4"/>
+  <text x="480" y="41" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" fill="#22d3ee">@SCHEDULED BILLING CRON</text>
+
+  <!-- Right Top Action Buttons -->
+  <rect x="880" y="20" width="135" height="32" rx="8" fill="#16223a" stroke="#334155"/>
+  <text x="947" y="41" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#94a3b8">Subscriber Portal</text>
+
+  <rect x="1030" y="20" width="120" height="32" rx="8" fill="#06b6d4" stroke="#22d3ee"/>
+  <text x="1090" y="41" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="800" fill="#070d19">NOC Admin</text>
+
+  <!-- Title Header -->
+  <g transform="translate(50, 105)">
+    <text x="0" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="28" font-weight="800" fill="#f8fafc">
+      ISP Automation &amp; Network Operations Center (NOC)
+    </text>
+    <text x="0" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" fill="#94a3b8">
+      Recurring Monthly Invoicing &bull; Plan Tier Lifecycle &bull; Real-Time Support Incident Dispatch
+    </text>
+  </g>
+
+  <!-- 4 KPI Metrics Grid -->
+  <g transform="translate(50, 190)">
+    <!-- KPI 1: Active Lines -->
+    <rect x="0" y="0" width="260" height="95" rx="14" fill="url(#cardGrad)" stroke="#1e293b" stroke-opacity="0.8" filter="url(#cardShadow)"/>
+    <rect x="20" y="22" width="50" height="50" rx="12" fill="#06b6d4" fill-opacity="0.15"/>
+    <text x="45" y="54" text-anchor="middle" font-size="24">📡</text>
+    <text x="85" y="48" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="28" font-weight="800" fill="#f8fafc">3 / 3</text>
+    <text x="85" y="68" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600" fill="#94a3b8">ACTIVE SUBSCRIBERS</text>
+
+    <!-- KPI 2: MRR -->
+    <rect x="280" y="0" width="260" height="95" rx="14" fill="url(#cardGrad)" stroke="#1e293b" stroke-opacity="0.8" filter="url(#cardShadow)"/>
+    <rect x="300" y="22" width="50" height="50" rx="12" fill="#10b981" fill-opacity="0.15"/>
+    <text x="325" y="54" text-anchor="middle" font-size="24">💵</text>
+    <text x="365" y="48" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="28" font-weight="800" fill="#34d399">$159.97</text>
+    <text x="365" y="68" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600" fill="#94a3b8">MONTHLY REC. REVENUE</text>
+
+    <!-- KPI 3: Total Collections -->
+    <rect x="560" y="0" width="260" height="95" rx="14" fill="url(#cardGrad)" stroke="#1e293b" stroke-opacity="0.8" filter="url(#cardShadow)"/>
+    <rect x="580" y="22" width="50" height="50" rx="12" fill="#8b5cf6" fill-opacity="0.15"/>
+    <text x="605" y="54" text-anchor="middle" font-size="24">💳</text>
+    <text x="645" y="48" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="28" font-weight="800" fill="#a78bfa">$153.38</text>
+    <text x="645" y="68" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600" fill="#94a3b8">PAID REVENUE SETTLED</text>
+
+    <!-- KPI 4: Active Tickets -->
+    <rect x="840" y="0" width="260" height="95" rx="14" fill="url(#cardGrad)" stroke="#1e293b" stroke-opacity="0.8" filter="url(#cardShadow)"/>
+    <rect x="860" y="22" width="50" height="50" rx="12" fill="#f59e0b" fill-opacity="0.15"/>
+    <text x="885" y="54" text-anchor="middle" font-size="24">🎫</text>
+    <text x="925" y="48" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="28" font-weight="800" fill="#fbbf24">2</text>
+    <text x="925" y="68" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600" fill="#94a3b8">NOC OPEN INCIDENTS</text>
+  </g>
+
+  <!-- Main Content Split: Left (Invoices Ledger) + Right (Subscriber Portal Live Card) -->
+  <g transform="translate(50, 315)">
+    <!-- Left Card: Master Invoices Table -->
+    <rect x="0" y="0" width="710" height="440" rx="16" fill="url(#cardGrad)" stroke="#1e293b" stroke-opacity="0.8" filter="url(#cardShadow)"/>
+    <text x="25" y="38" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="18" font-weight="700" fill="#f8fafc">Monthly Invoices &amp; Revenue Ledger</text>
+    <text x="25" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#94a3b8">Automated tax breakdown &bull; Real-time payment reconciliation</text>
+
+    <!-- Table Header -->
+    <rect x="20" y="80" width="670" height="36" rx="6" fill="#0f172a" fill-opacity="0.9"/>
+    <text x="35" y="103" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" fill="#94a3b8">INVOICE #</text>
+    <text x="180" y="103" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" fill="#94a3b8">SUBSCRIBER</text>
+    <text x="320" y="103" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" fill="#94a3b8">PLAN / TIER</text>
+    <text x="470" y="103" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" fill="#94a3b8">TOTAL (18% TAX)</text>
+    <text x="600" y="103" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" fill="#94a3b8">STATUS</text>
+
+    <!-- Row 1: Unpaid (CUST-1001) -->
+    <g transform="translate(20, 130)">
+      <line x1="0" y1="52" x2="670" y2="52" stroke="#1e293b" stroke-opacity="0.6"/>
+      <text x="15" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700" fill="#22d3ee">INV-202610-1001</text>
+      <text x="15" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#64748b">Due: Nov 15, 2026</text>
+      <text x="160" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700" fill="#f8fafc">Johnathan Swift</text>
+      <text x="160" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#94a3b8">CUST-1001</text>
+      <text x="300" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#cbd5e1">Family Ultra 300</text>
+      <text x="300" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#38bdf8">300 Mbps</text>
+      <text x="450" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="800" fill="#f8fafc">$58.99</text>
+      <text x="450" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#64748b">Base: $49.99</text>
+      <rect x="580" y="12" width="75" height="24" rx="12" fill="#f59e0b" fill-opacity="0.2" stroke="#f59e0b" stroke-opacity="0.4"/>
+      <text x="617" y="28" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700" fill="#fbbf24">UNPAID</text>
+    </g>
+
+    <!-- Row 2: Paid (CUST-1002) -->
+    <g transform="translate(20, 200)">
+      <line x1="0" y1="52" x2="670" y2="52" stroke="#1e293b" stroke-opacity="0.6"/>
+      <text x="15" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700" fill="#22d3ee">INV-202610-1002</text>
+      <text x="15" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#64748b">Paid via Card</text>
+      <text x="160" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700" fill="#f8fafc">TechCorp Labs</text>
+      <text x="160" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#94a3b8">CUST-1002</text>
+      <text x="300" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#cbd5e1">GigaPro 1000</text>
+      <text x="300" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#a78bfa">1000 Mbps</text>
+      <text x="450" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="800" fill="#34d399">$94.39</text>
+      <text x="450" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#64748b">Base: $79.99</text>
+      <rect x="580" y="12" width="75" height="24" rx="12" fill="#10b981" fill-opacity="0.2" stroke="#10b981" stroke-opacity="0.4"/>
+      <text x="617" y="28" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700" fill="#34d399">PAID</text>
+    </g>
+
+    <!-- Row 3: Overdue (CUST-1003) -->
+    <g transform="translate(20, 270)">
+      <text x="15" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700" fill="#22d3ee">INV-202608-1003</text>
+      <text x="15" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#f43f5e">Past Due 20d</text>
+      <text x="160" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700" fill="#f8fafc">Elena Rostova</text>
+      <text x="160" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#94a3b8">CUST-1003</text>
+      <text x="300" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#cbd5e1">Fiber Starter 100</text>
+      <text x="300" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#cbd5e1">100 Mbps</text>
+      <text x="450" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="800" fill="#fb7185">$35.39</text>
+      <text x="450" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#64748b">Base: $29.99</text>
+      <rect x="580" y="12" width="75" height="24" rx="12" fill="#f43f5e" fill-opacity="0.2" stroke="#f43f5e" stroke-opacity="0.4"/>
+      <text x="617" y="28" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700" fill="#fb7185">OVERDUE</text>
+    </g>
+  </g>
+
+  <!-- Right Card: Subscriber Self-Service Portal Preview -->
+  <g transform="translate(780, 315)">
+    <rect x="0" y="0" width="370" height="440" rx="16" fill="url(#cardGrad)" stroke="#1e293b" stroke-opacity="0.8" filter="url(#cardShadow)"/>
+    <text x="25" y="38" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="18" font-weight="700" fill="#f8fafc">Subscriber Portal</text>
+    <text x="25" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#94a3b8">Active: Johnathan Swift (CUST-1001)</text>
+
+    <!-- Plan Speed Dial -->
+    <rect x="20" y="80" width="330" height="150" rx="12" fill="#070d19" stroke="#06b6d4" stroke-opacity="0.4"/>
+    <text x="35" y="105" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" fill="#22d3ee">ACTIVE BROADBAND LINE</text>
+    <text x="35" y="145" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="36" font-weight="900" fill="#f8fafc">300 <tspan font-size="16" fill="#06b6d4">Mbps</tspan></text>
+    <text x="35" y="172" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700" fill="#cbd5e1">Family Ultra 300 Plan</text>
+    <text x="35" y="195" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#94a3b8">FUP Limit: Unlimited &bull; IP: 198.51.100.22</text>
+
+    <!-- Outstanding Balance & Pay Button -->
+    <rect x="20" y="245" width="330" height="170" rx="12" fill="#070d19" stroke="#f43f5e" stroke-opacity="0.4"/>
+    <text x="35" y="270" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" fill="#fb7185">OUTSTANDING BALANCE</text>
+    <text x="35" y="305" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="32" font-weight="900" fill="#f8fafc">$58.99</text>
+    <text x="35" y="328" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#94a3b8">Pending cycle 10/2026 &bull; Due Nov 15</text>
+    <rect x="35" y="350" width="300" height="38" rx="8" fill="#10b981"/>
+    <text x="185" y="374" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="800" fill="#070d19">💳 Pay Now ($58.99) &rarr;</text>
+  </g>
+</svg>

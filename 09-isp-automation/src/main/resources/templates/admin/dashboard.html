@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOC Operations & Billing Admin - FiberPulse</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a th:href="@{/admin}" class="nav-brand">
+        <span class="logo-icon">⚡</span>
+        <span>FiberPulse &bull; NOC Operations &amp; Billing Center</span>
+    </a>
+    <nav class="nav-links">
+        <a th:href="@{/}" class="btn btn-secondary btn-sm">Home Showcase</a>
+        <a th:href="@{/portal(code='CUST-1001')}" class="btn btn-primary btn-sm">Subscriber Portal &rarr;</a>
+    </nav>
+</header>
+
+<main class="container">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Network Operations Center &amp; Automated Billing</h1>
+            <p class="page-subtitle">Broadband subscriber provisioning, recurring billing engine cron, and incident dispatch</p>
+        </div>
+        <div>
+            <form th:action="@{/admin/billing/run}" method="post" style="display: flex; gap: 0.5rem; align-items: center;">
+                <input type="hidden" name="month" th:value="${currentMonth}">
+                <input type="hidden" name="year" th:value="${currentYear}">
+                <button type="submit" class="btn btn-primary">
+                    <span>⚡</span> Run Billing Cycle (<span th:text="${currentMonth} + '/' + ${currentYear}">10/2026</span>)
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Alert Notifications -->
+    <div th:if="${successMessage}" class="alert alert-success">
+        <span>✅</span>
+        <span th:text="${successMessage}">Success message</span>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-error">
+        <span>⚠️</span>
+        <span th:text="${errorMessage}">Error message</span>
+    </div>
+
+    <!-- KPI Metrics Grid -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(6, 182, 212, 0.2); color: var(--cyan);">📡</div>
+            <div>
+                <div class="stat-val" th:text="${activeCount} + ' / ' + ${totalCustomers}">3 / 3</div>
+                <div class="stat-lbl">Active Subscribers</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(16, 185, 129, 0.2); color: var(--emerald);">💵</div>
+            <div>
+                <div class="stat-val" th:text="'$' + ${mrr}">$159.97</div>
+                <div class="stat-lbl">Monthly Rec. Revenue (MRR)</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(139, 92, 246, 0.2); color: var(--purple);">💳</div>
+            <div>
+                <div class="stat-val" th:text="'$' + ${totalRevenue}">$153.38</div>
+                <div class="stat-lbl">Total Settled Collections</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(244, 63, 94, 0.2); color: var(--rose);">⚠️</div>
+            <div>
+                <div class="stat-val" th:text="${overdueCount}">1</div>
+                <div class="stat-lbl">Overdue Invoices</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(245, 158, 11, 0.2); color: var(--amber);">🎫</div>
+            <div>
+                <div class="stat-val" th:text="${openTickets}">2</div>
+                <div class="stat-lbl">Active NOC Incidents</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOC Incident Backlog Table -->
+    <div class="card" style="margin-bottom: 2rem;">
+        <div class="page-header" style="margin-bottom: 1rem;">
+            <h3>Active NOC Incident Dispatch</h3>
+            <span class="badge badge-in_progress" th:text="${openTickets} + ' Open / In Progress'">Tickets</span>
+        </div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ticket #</th>
+                        <th>Subscriber</th>
+                        <th>Issue Summary</th>
+                        <th>Category</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>NOC Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="t : ${tickets}">
+                        <td><code style="color: var(--cyan); font-weight: 700;" th:text="${t.ticketNumber}">TKT-5001</code></td>
+                        <td>
+                            <strong th:text="${t.customer.name}">Johnathan Swift</strong>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);" th:text="${t.customer.customerCode}">CUST-1001</div>
+                        </td>
+                        <td style="max-width: 250px;">
+                            <div th:text="${t.subject}">Wi-Fi node loses sync</div>
+                            <div th:if="${t.resolutionNotes}" style="font-size: 0.8rem; color: var(--emerald); font-style: italic;" th:text="${t.resolutionNotes}">Notes</div>
+                        </td>
+                        <td th:text="${t.category}">Hardware</td>
+                        <td>
+                            <span th:if="${t.priority.name() == 'CRITICAL'}" class="badge badge-critical">CRITICAL</span>
+                            <span th:if="${t.priority.name() == 'HIGH'}" class="badge badge-high">HIGH</span>
+                            <span th:if="${t.priority.name() == 'MEDIUM'}" class="badge badge-medium">MEDIUM</span>
+                            <span th:if="${t.priority.name() == 'LOW'}" class="badge badge-low">LOW</span>
+                        </td>
+                        <td>
+                            <span th:if="${t.status.name() == 'OPEN'}" class="badge badge-open">OPEN</span>
+                            <span th:if="${t.status.name() == 'IN_PROGRESS'}" class="badge badge-in_progress">IN PROGRESS</span>
+                            <span th:if="${t.status.name() == 'RESOLVED'}" class="badge badge-resolved">RESOLVED</span>
+                            <span th:if="${t.status.name() == 'CLOSED'}" class="badge badge-closed">CLOSED</span>
+                        </td>
+                        <td>
+                            <form th:if="${t.status.name() != 'CLOSED'}" th:action="@{/admin/tickets/{id}/status(id=${t.id})}" method="post" style="display: flex; gap: 0.35rem; align-items: center;">
+                                <select name="status" style="padding: 0.25rem 0.5rem; font-size: 0.8rem; width: auto;">
+                                    <option value="IN_PROGRESS" th:selected="${t.status.name() == 'IN_PROGRESS'}">In Progress</option>
+                                    <option value="RESOLVED" th:selected="${t.status.name() == 'RESOLVED'}">Resolved</option>
+                                    <option value="CLOSED">Closed</option>
+                                </select>
+                                <input type="text" name="resolutionNotes" placeholder="NOC notes..." style="padding: 0.25rem 0.5rem; font-size: 0.8rem; width: 120px;">
+                                <button type="submit" class="btn btn-secondary btn-sm">Save</button>
+                            </form>
+                            <span th:if="${t.status.name() == 'CLOSED'}" style="color: var(--text-muted); font-size: 0.85rem;">Ticket Closed</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Master Invoices Audit Log -->
+    <div class="card">
+        <div class="page-header" style="margin-bottom: 1rem;">
+            <h3>Master Invoices &amp; Revenue Ledger</h3>
+            <span class="badge badge-paid" th:text="${#lists.size(invoices)} + ' Total Invoices'">Invoices</span>
+        </div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Invoice #</th>
+                        <th>Cycle</th>
+                        <th>Subscriber</th>
+                        <th>Plan</th>
+                        <th>Base Tariff</th>
+                        <th>Tax</th>
+                        <th>Total Due</th>
+                        <th>Status</th>
+                        <th>Receipt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="inv : ${invoices}">
+                        <td><code th:text="${inv.invoiceNumber}">INV-1001</code></td>
+                        <td th:text="${inv.billingMonth} + '/' + ${inv.billingYear}">10/2026</td>
+                        <td>
+                            <strong th:text="${inv.customer.name}">Johnathan Swift</strong>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);" th:text="${inv.customer.customerCode}">CUST-1001</div>
+                        </td>
+                        <td th:text="${inv.plan.name}">Family Ultra 300</td>
+                        <td th:text="'$' + ${inv.baseAmount}">$49.99</td>
+                        <td style="color: var(--text-muted);" th:text="'$' + ${inv.taxAmount}">$9.00</td>
+                        <td><strong style="color: var(--text-primary);" th:text="'$' + ${inv.totalAmount}">$58.99</strong></td>
+                        <td>
+                            <span th:if="${inv.status.name() == 'PAID'}" class="badge badge-paid">PAID</span>
+                            <span th:if="${inv.status.name() == 'UNPAID'}" class="badge badge-unpaid">UNPAID</span>
+                            <span th:if="${inv.status.name() == 'OVERDUE'}" class="badge badge-overdue">OVERDUE</span>
+                        </td>
+                        <td>
+                            <a th:href="@{/portal/invoices/{id}(id=${inv.id}, code=${inv.customer.customerCode})}"
+                               class="btn btn-secondary btn-sm">View Tax Bill</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 FiberPulse Broadband &bull; NOC Operations Command Center</p>
+</footer>
+
+</body>
+</html>

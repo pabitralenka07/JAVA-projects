@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscriber Portal - FiberPulse Broadband</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a th:href="@{/portal(code=${customer.customerCode})}" class="nav-brand">
+        <span class="logo-icon">⚡</span>
+        <span>FiberPulse &bull; Subscriber Self-Service</span>
+    </a>
+    <nav class="nav-links">
+        <a th:href="@{/portal/invoices(code=${customer.customerCode})}">My Invoices</a>
+        <a th:href="@{/portal/tickets(code=${customer.customerCode})}">Support Tickets</a>
+        <a th:href="@{/}" class="btn btn-secondary btn-sm">Switch Subscriber</a>
+        <a th:href="@{/admin}" class="btn btn-primary btn-sm">NOC Admin</a>
+    </nav>
+</header>
+
+<main class="container">
+    <!-- Active Customer Switcher Header -->
+    <div class="switcher-bar">
+        <div>
+            <span style="font-size: 0.85rem; color: var(--text-secondary);">Currently Viewing:</span>
+            <strong style="color: var(--text-primary); margin-left: 0.25rem;" th:text="${customer.name} + ' (' + ${customer.customerCode} + ')'">
+                Johnathan Swift (CUST-1001)
+            </strong>
+        </div>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <a th:each="c : ${allCustomers}"
+               th:href="@{/portal(code=${c.customerCode})}"
+               th:text="${c.customerCode}"
+               th:class="'subscriber-pill ' + (${c.customerCode == customer.customerCode} ? 'active' : '')">
+                CUST-1001
+            </a>
+        </div>
+    </div>
+
+    <!-- Alert Notifications -->
+    <div th:if="${successMessage}" class="alert alert-success">
+        <span>✅</span>
+        <span th:text="${successMessage}">Success message</span>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-error">
+        <span>⚠️</span>
+        <span th:text="${errorMessage}">Error message</span>
+    </div>
+
+    <!-- Subscription & Balance Hero Grid -->
+    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+        <!-- Plan Overview Card -->
+        <div class="card" style="border-left: 4px solid var(--cyan);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                <div>
+                    <span class="badge badge-active" th:text="${customer.status}">ACTIVE</span>
+                    <h2 style="font-size: 1.6rem; margin-top: 0.5rem;" th:text="${customer.currentPlan.name}">Family Ultra 300</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;" th:text="${customer.installationAddress}">
+                        742 Evergreen Terrace, Sector 4
+                    </p>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 2.2rem; font-weight: 800; color: var(--cyan);">
+                        <span th:text="${customer.currentPlan.speedMbps}">300</span>
+                        <span style="font-size: 1rem; color: var(--text-secondary); font-weight: 500;">Mbps</span>
+                    </div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">Symmetrical Fiber</div>
+                </div>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.25); padding: 1rem; border-radius: var(--radius-md); display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center;">
+                <div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Monthly Base</div>
+                    <strong style="color: var(--emerald); font-size: 1.1rem;" th:text="'$' + ${customer.currentPlan.monthlyPrice}">$49.99</strong>
+                </div>
+                <div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Data FUP</div>
+                    <strong style="color: var(--text-primary); font-size: 1.1rem;" th:text="${customer.currentPlan.isUnlimited() ? 'Unlimited' : customer.currentPlan.dataLimitGb + ' GB'}">Unlimited</strong>
+                </div>
+                <div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Customer Code</div>
+                    <strong style="color: var(--cyan); font-size: 1.1rem;" th:text="${customer.customerCode}">CUST-1001</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Billing Balance Due Card -->
+        <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid var(--rose);">
+            <div>
+                <span style="font-size: 0.85rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em;">
+                    Current Outstanding Balance
+                </span>
+                <div style="font-size: 2.5rem; font-weight: 800; color: var(--text-primary); margin: 0.5rem 0;">
+                    <span th:text="'$' + ${customer.balance}">$58.99</span>
+                </div>
+                <div th:if="${customer.balance > 0}" style="font-size: 0.85rem; color: var(--rose);">
+                    &bull; Invoice payment pending for current cycle
+                </div>
+                <div th:if="${customer.balance == 0}" style="font-size: 0.85rem; color: var(--emerald);">
+                    &check; All bills settled. No pending balance!
+                </div>
+            </div>
+            <div style="margin-top: 1.25rem;">
+                <a th:href="@{/portal/invoices(code=${customer.customerCode})}" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                    View &amp; Pay Bills &rarr;
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invoices & Tickets Side-by-Side -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.5rem;">
+        <!-- Recent Invoices Card -->
+        <div class="card">
+            <div class="page-header" style="margin-bottom: 1rem;">
+                <h3>Recent Billing Invoices</h3>
+                <a th:href="@{/portal/invoices(code=${customer.customerCode})}" class="btn btn-secondary btn-sm">All Invoices &rarr;</a>
+            </div>
+
+            <div th:if="${#lists.isEmpty(invoices)}" style="color: var(--text-muted); padding: 1.5rem 0; text-align: center;">
+                No invoices on record.
+            </div>
+
+            <div th:if="${!#lists.isEmpty(invoices)}" class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Invoice #</th>
+                            <th>Cycle</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="inv, iter : ${invoices}" th:if="${iter.index < 4}">
+                            <td><code th:text="${inv.invoiceNumber}">INV-1001</code></td>
+                            <td th:text="${inv.billingMonth} + '/' + ${inv.billingYear}">10/2026</td>
+                            <td><strong th:text="'$' + ${inv.totalAmount}">$58.99</strong></td>
+                            <td>
+                                <span th:if="${inv.status.name() == 'PAID'}" class="badge badge-paid">PAID</span>
+                                <span th:if="${inv.status.name() == 'UNPAID'}" class="badge badge-unpaid">UNPAID</span>
+                                <span th:if="${inv.status.name() == 'OVERDUE'}" class="badge badge-overdue">OVERDUE</span>
+                            </td>
+                            <td>
+                                <form th:if="${inv.status.name() == 'UNPAID' || inv.status.name() == 'OVERDUE'}"
+                                      th:action="@{/portal/invoices/{id}/pay(id=${inv.id})}" method="post">
+                                    <input type="hidden" name="code" th:value="${customer.customerCode}">
+                                    <button type="submit" class="btn btn-success btn-sm">Pay Now</button>
+                                </form>
+                                <a th:if="${inv.status.name() == 'PAID'}"
+                                   th:href="@{/portal/invoices/{id}(id=${inv.id}, code=${customer.customerCode})}"
+                                   class="btn btn-secondary btn-sm">Receipt</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- NOC Support Tickets Card -->
+        <div class="card">
+            <div class="page-header" style="margin-bottom: 1rem;">
+                <h3>Support Tickets</h3>
+                <a th:href="@{/portal/tickets/new(code=${customer.customerCode})}" class="btn btn-primary btn-sm">➕ New Ticket</a>
+            </div>
+
+            <div th:if="${#lists.isEmpty(tickets)}" style="color: var(--text-muted); padding: 1.5rem 0; text-align: center;">
+                No support tickets filed.
+            </div>
+
+            <div th:if="${!#lists.isEmpty(tickets)}" style="display: grid; gap: 0.75rem;">
+                <div th:each="t : ${tickets}" style="background: rgba(0,0,0,0.25); padding: 1rem; border-radius: var(--radius-md); border-left: 3px solid var(--cyan);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                        <code style="color: var(--cyan); font-weight: 700;" th:text="${t.ticketNumber}">TKT-5001</code>
+                        <div>
+                            <span th:if="${t.status.name() == 'OPEN'}" class="badge badge-open">OPEN</span>
+                            <span th:if="${t.status.name() == 'IN_PROGRESS'}" class="badge badge-in_progress">IN PROGRESS</span>
+                            <span th:if="${t.status.name() == 'RESOLVED'}" class="badge badge-resolved">RESOLVED</span>
+                            <span th:if="${t.status.name() == 'CLOSED'}" class="badge badge-closed">CLOSED</span>
+                        </div>
+                    </div>
+                    <strong style="color: var(--text-primary); font-size: 0.95rem;" th:text="${t.subject}">Wi-Fi node loses sync</strong>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;" th:text="${t.description}">
+                        Repeater amber flashing LED
+                    </div>
+                    <div th:if="${t.resolutionNotes}" style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--emerald); font-style: italic;">
+                        <strong>NOC Update:</strong> <span th:text="${t.resolutionNotes}">Notes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 FiberPulse Broadband &bull; Subscriber Self-Service Portal</p>
+</footer>
+
+</body>
+</html>

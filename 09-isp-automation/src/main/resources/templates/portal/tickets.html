@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Tickets - FiberPulse Broadband</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a th:href="@{/portal(code=${customer.customerCode})}" class="nav-brand">
+        <span class="logo-icon">⚡</span>
+        <span>FiberPulse &bull; Subscriber Self-Service</span>
+    </a>
+    <nav class="nav-links">
+        <a th:href="@{/portal(code=${customer.customerCode})}" class="btn btn-secondary btn-sm">&larr; Back to Dashboard</a>
+        <a th:href="@{/portal/tickets/new(code=${customer.customerCode})}" class="btn btn-primary btn-sm">➕ Submit New Ticket</a>
+    </nav>
+</header>
+
+<main class="container">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Technical Support &amp; NOC Requests</h1>
+            <p class="page-subtitle">
+                Subscriber: <strong style="color: var(--text-primary);" th:text="${customer.name}">Johnathan Swift</strong>
+                (<code th:text="${customer.customerCode}">CUST-1001</code>)
+            </p>
+        </div>
+    </div>
+
+    <!-- Alert Notifications -->
+    <div th:if="${successMessage}" class="alert alert-success">
+        <span>✅</span>
+        <span th:text="${successMessage}">Success message</span>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-error">
+        <span>⚠️</span>
+        <span th:text="${errorMessage}">Error message</span>
+    </div>
+
+    <div th:if="${#lists.isEmpty(tickets)}" class="card" style="text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎫</div>
+        <p>You have no active or historical support tickets.</p>
+        <a th:href="@{/portal/tickets/new(code=${customer.customerCode})}" class="btn btn-primary" style="margin-top: 1rem;">
+            Open Support Ticket
+        </a>
+    </div>
+
+    <div th:if="${!#lists.isEmpty(tickets)}" style="display: grid; gap: 1.25rem;">
+        <div th:each="t : ${tickets}" class="card" style="border-left: 4px solid var(--cyan);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+                <div>
+                    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.35rem;">
+                        <code style="color: var(--cyan); font-weight: 800; font-size: 1rem;" th:text="${t.ticketNumber}">TKT-5001</code>
+                        <span class="badge badge-low" th:text="${t.category}">Hardware</span>
+                        <span th:if="${t.priority.name() == 'CRITICAL'}" class="badge badge-critical">CRITICAL</span>
+                        <span th:if="${t.priority.name() == 'HIGH'}" class="badge badge-high">HIGH</span>
+                        <span th:if="${t.priority.name() == 'MEDIUM'}" class="badge badge-medium">MEDIUM</span>
+                        <span th:if="${t.priority.name() == 'LOW'}" class="badge badge-low">LOW</span>
+                    </div>
+                    <h3 style="color: var(--text-primary); font-size: 1.15rem;" th:text="${t.subject}">Wi-Fi mesh node loses sync</h3>
+                </div>
+                <div>
+                    <span th:if="${t.status.name() == 'OPEN'}" class="badge badge-open">OPEN</span>
+                    <span th:if="${t.status.name() == 'IN_PROGRESS'}" class="badge badge-in_progress">IN PROGRESS</span>
+                    <span th:if="${t.status.name() == 'RESOLVED'}" class="badge badge-resolved">RESOLVED</span>
+                    <span th:if="${t.status.name() == 'CLOSED'}" class="badge badge-closed">CLOSED</span>
+                </div>
+            </div>
+
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem; line-height: 1.6;" th:text="${t.description}">
+                Secondary mesh repeater in 2nd floor study shows amber flashing LED intermittently.
+            </p>
+
+            <div th:if="${t.resolutionNotes}" style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: var(--radius-md); border-left: 3px solid var(--emerald); margin-bottom: 0.75rem;">
+                <div style="font-size: 0.75rem; color: var(--emerald); font-weight: 700; text-transform: uppercase; margin-bottom: 0.25rem;">NOC RESOLUTION DISPATCH</div>
+                <div style="font-size: 0.9rem; color: var(--text-primary);" th:text="${t.resolutionNotes}">Notes</div>
+            </div>
+
+            <div style="font-size: 0.8rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+                <span>Created: <span th:text="${#temporals.format(t.createdAt, 'MMM dd, yyyy HH:mm')}">Oct 26, 2026</span></span>
+                <span th:if="${t.resolvedAt}">Resolved: <span th:text="${#temporals.format(t.resolvedAt, 'MMM dd, yyyy HH:mm')}">Oct 27, 2026</span></span>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 FiberPulse Broadband &bull; Technical Support</p>
+</footer>
+
+</body>
+</html>

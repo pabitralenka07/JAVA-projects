@@ -33,7 +33,7 @@ public class TicketService {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + customerId));
 
-        String ticketNumber = "TKT-" + TICKET_SEQ.incrementAndGet();
+        String ticketNumber = "TKT-" + java.util.UUID.randomUUID().toString().substring(0, 8).toUpperCase();
         SupportTicket ticket = new SupportTicket(ticketNumber, customer, subject, category, description, priority);
         return ticketRepository.save(ticket);
     }

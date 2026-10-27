@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'Invoice #' + ${invoice.invoiceNumber} + ' - FiberPulse'">Invoice Detail</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a th:href="@{/portal(code=${customer.customerCode})}" class="nav-brand">
+        <span class="logo-icon">⚡</span>
+        <span>FiberPulse &bull; Subscriber Self-Service</span>
+    </a>
+    <nav class="nav-links">
+        <a th:href="@{/portal/invoices(code=${customer.customerCode})}" class="btn btn-secondary btn-sm">&larr; Back to Invoices</a>
+        <button class="btn btn-primary btn-sm" onclick="window.print()">🖨️ Print Invoice</button>
+    </nav>
+</header>
+
+<main class="container" style="max-width: 780px;">
+    <!-- Printable Invoice Receipt Box -->
+    <div class="card" style="padding: 2.5rem; border: 1px solid var(--border-color); background: rgba(12, 21, 39, 0.95);">
+        <!-- Top Invoice Header -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem; margin-bottom: 2rem;">
+            <div>
+                <h2 style="font-size: 1.8rem; font-weight: 800; color: var(--cyan); margin-bottom: 0.25rem;">⚡ FiberPulse Broadband</h2>
+                <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
+                    Next-Gen Fiber Network Operations Center<br>
+                    100 Gigabit Way, Tech District, CA 94016<br>
+                    support@fiberpulse.net &bull; 1-800-555-FIBER
+                </div>
+            </div>
+            <div style="text-align: right;">
+                <div style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase;">TAX INVOICE</div>
+                <h3 style="color: var(--text-primary); margin: 0.25rem 0;" th:text="${invoice.invoiceNumber}">INV-202610-1001</h3>
+                <div>
+                    <span th:if="${invoice.status.name() == 'PAID'}" class="badge badge-paid">PAID IN FULL</span>
+                    <span th:if="${invoice.status.name() == 'UNPAID'}" class="badge badge-unpaid">UNPAID DUE</span>
+                    <span th:if="${invoice.status.name() == 'OVERDUE'}" class="badge badge-overdue">PAST OVERDUE</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Billed To & Dates Metadata -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+            <div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.35rem;">BILLED SUBSCRIBER</div>
+                <strong style="font-size: 1.1rem; color: var(--text-primary);" th:text="${customer.name}">Johnathan Swift</strong>
+                <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                    Account ID: <code style="color: var(--cyan);" th:text="${customer.customerCode}">CUST-1001</code><br>
+                    Email: <span th:text="${customer.email}">jswift@example.com</span><br>
+                    Phone: <span th:text="${customer.phone}">+1-555-0101</span><br>
+                    Installation: <span th:text="${customer.installationAddress}">742 Evergreen Terr</span>
+                </div>
+            </div>
+            <div style="background: rgba(0,0,0,0.25); padding: 1.25rem; border-radius: var(--radius-md);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                    <span style="color: var(--text-muted);">Billing Cycle:</span>
+                    <strong th:text="${invoice.billingMonth} + '/' + ${invoice.billingYear}">10/2026</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                    <span style="color: var(--text-muted);">Issue Date:</span>
+                    <span th:text="${#temporals.format(invoice.issueDate, 'MMMM dd, yyyy')}">October 01, 2026</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                    <span style="color: var(--text-muted);">Due Date:</span>
+                    <span th:text="${#temporals.format(invoice.dueDate, 'MMMM dd, yyyy')}">October 16, 2026</span>
+                </div>
+                <div th:if="${invoice.paidAt}" style="display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--emerald);">
+                    <span>Paid Date:</span>
+                    <strong th:text="${#temporals.format(invoice.paidAt, 'MMMM dd, yyyy HH:mm')}">Paid</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Line Items Table -->
+        <div class="table-responsive" style="margin-bottom: 2rem;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Service Description</th>
+                        <th>Speed</th>
+                        <th>Billing Period</th>
+                        <th style="text-align: right;">Amount (USD)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <strong th:text="${invoice.plan.name}">Family Ultra 300</strong>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);" th:text="${invoice.plan.description}">
+                                300 Mbps unlimited symmetrical fiber
+                            </div>
+                        </td>
+                        <td><span class="badge badge-open" th:text="${invoice.plan.speedMbps} + ' Mbps'">300 Mbps</span></td>
+                        <td th:text="${invoice.billingMonth} + '/' + ${invoice.billingYear}">10/2026</td>
+                        <td style="text-align: right;"><strong th:text="'$' + ${invoice.baseAmount}">$49.99</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Total Calculation Breakdown -->
+        <div style="display: flex; justify-content: flex-end;">
+            <div style="width: 320px;">
+                <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--border-color); font-size: 0.9rem;">
+                    <span style="color: var(--text-muted);">Subtotal (Base Tariff):</span>
+                    <span th:text="'$' + ${invoice.baseAmount}">$49.99</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--border-color); font-size: 0.9rem;">
+                    <span style="color: var(--text-muted);">Regulatory Tax (18% GST/VAT):</span>
+                    <span th:text="'$' + ${invoice.taxAmount}">$9.00</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 0.75rem 0; font-size: 1.25rem; font-weight: 800; color: var(--text-primary);">
+                    <span>Total Amount:</span>
+                    <span style="color: var(--cyan);" th:text="'$' + ${invoice.totalAmount}">$58.99</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 FiberPulse Broadband &bull; Official Tax Invoice</p>
+</footer>
+
+</body>
+</html>

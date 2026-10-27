@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoices & Billing - FiberPulse Broadband</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a th:href="@{/portal(code=${customer.customerCode})}" class="nav-brand">
+        <span class="logo-icon">⚡</span>
+        <span>FiberPulse &bull; Subscriber Self-Service</span>
+    </a>
+    <nav class="nav-links">
+        <a th:href="@{/portal(code=${customer.customerCode})}" class="btn btn-secondary btn-sm">&larr; Back to Dashboard</a>
+    </nav>
+</header>
+
+<main class="container">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Billing Invoices &amp; Payments</h1>
+            <p class="page-subtitle">
+                Subscriber: <strong style="color: var(--text-primary);" th:text="${customer.name}">Johnathan Swift</strong>
+                (<code th:text="${customer.customerCode}">CUST-1001</code>) &bull;
+                Outstanding Balance: <strong style="color: var(--rose);" th:text="'$' + ${customer.balance}">$58.99</strong>
+            </p>
+        </div>
+    </div>
+
+    <!-- Alert Notifications -->
+    <div th:if="${successMessage}" class="alert alert-success">
+        <span>✅</span>
+        <span th:text="${successMessage}">Success message</span>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-error">
+        <span>⚠️</span>
+        <span th:text="${errorMessage}">Error message</span>
+    </div>
+
+    <!-- Invoices Card Table -->
+    <div class="card">
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Invoice Number</th>
+                        <th>Billing Cycle</th>
+                        <th>Subscription Plan</th>
+                        <th>Base Fee</th>
+                        <th>Tax (18%)</th>
+                        <th>Total Due</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="inv : ${invoices}">
+                        <td><code th:text="${inv.invoiceNumber}">INV-202610-CUST-1001</code></td>
+                        <td th:text="${inv.billingMonth} + '/' + ${inv.billingYear}">10/2026</td>
+                        <td th:text="${inv.plan.name}">Family Ultra 300</td>
+                        <td th:text="'$' + ${inv.baseAmount}">$49.99</td>
+                        <td style="color: var(--text-muted);" th:text="'$' + ${inv.taxAmount}">$9.00</td>
+                        <td><strong style="color: var(--text-primary); font-size: 1.05rem;" th:text="'$' + ${inv.totalAmount}">$58.99</strong></td>
+                        <td th:text="${#temporals.format(inv.dueDate, 'MMM dd, yyyy')}">Nov 15, 2026</td>
+                        <td>
+                            <span th:if="${inv.status.name() == 'PAID'}" class="badge badge-paid">PAID</span>
+                            <span th:if="${inv.status.name() == 'UNPAID'}" class="badge badge-unpaid">UNPAID</span>
+                            <span th:if="${inv.status.name() == 'OVERDUE'}" class="badge badge-overdue">OVERDUE</span>
+                        </td>
+                        <td>
+                            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                <form th:if="${inv.status.name() == 'UNPAID' || inv.status.name() == 'OVERDUE'}"
+                                      th:action="@{/portal/invoices/{id}/pay(id=${inv.id})}" method="post" style="display:inline;">
+                                    <input type="hidden" name="code" th:value="${customer.customerCode}">
+                                    <button type="submit" class="btn btn-success btn-sm">Pay $</button>
+                                </form>
+                                <a th:href="@{/portal/invoices/{id}(id=${inv.id}, code=${customer.customerCode})}"
+                                   class="btn btn-secondary btn-sm">Receipt</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 FiberPulse Broadband &bull; Billing Engine</p>
+</footer>
+
+</body>
+</html>
