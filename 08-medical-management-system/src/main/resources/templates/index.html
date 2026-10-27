@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthPulse Clinic & Hospital Management System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a th:href="@{/}" class="nav-brand">
+        <span class="logo-icon">🩺</span>
+        <span>HealthPulse Clinic</span>
+    </a>
+    <nav class="nav-links">
+        <a th:href="@{/login}" class="btn btn-secondary">Sign In</a>
+        <a th:href="@{/register}" class="btn btn-primary">Patient Portal</a>
+    </nav>
+</header>
+
+<main class="container">
+    <!-- Hero Section -->
+    <div style="text-align: center; margin: 3rem auto 3.5rem; max-width: 800px;">
+        <div class="badge badge-admin" style="margin-bottom: 1rem; padding: 0.4rem 1rem;">
+            Enterprise Healthcare Platform &bull; Role-Based Access Control
+        </div>
+        <h1 style="font-size: 2.75rem; line-height: 1.2; margin-bottom: 1.25rem;">
+            Unified Clinical Operations, Appointments &amp; Electronic Medical Records
+        </h1>
+        <p style="font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 2rem;">
+            Streamlining patient appointments, double-booking prevention, automated scheduling,
+            and digital prescriptions under strict Spring Security 6 RBAC protection.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a th:href="@{/login}" class="btn btn-primary" style="padding: 0.8rem 1.8rem; font-size: 1rem;">
+                Explore Portals &amp; Sign In &rarr;
+            </a>
+            <a th:href="@{/register}" class="btn btn-secondary" style="padding: 0.8rem 1.8rem; font-size: 1rem;">
+                New Patient Registration
+            </a>
+        </div>
+    </div>
+
+    <!-- Quick Role Access Cards -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 3.5rem;">
+        <div class="card" style="border-top: 4px solid var(--accent-indigo);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <span style="font-size: 2rem;">🛡️</span>
+                <span class="badge badge-admin">ROLE_ADMIN</span>
+            </div>
+            <h3 style="margin-bottom: 0.5rem;">Administrator Portal</h3>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.25rem;">
+                Manage hospital staff, register certified doctors, review patient analytics, and monitor hospital-wide appointment schedules.
+            </p>
+            <div style="background: rgba(0,0,0,0.3); padding: 0.75rem; border-radius: 8px; font-size: 0.85rem; margin-bottom: 1rem;">
+                <code>User: <strong>admin</strong> | Pass: <strong>admin123</strong></code>
+            </div>
+            <a th:href="@{/login(demo='admin')}" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center;">
+                Log In as Admin
+            </a>
+        </div>
+
+        <div class="card" style="border-top: 4px solid var(--accent-teal);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <span style="font-size: 2rem;">🩺</span>
+                <span class="badge badge-doctor">ROLE_DOCTOR</span>
+            </div>
+            <h3 style="margin-bottom: 0.5rem;">Doctor Clinical Workbench</h3>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.25rem;">
+                Review daily consultation queues, confirm or complete patient visits, issue electronic prescriptions, and log clinical diagnoses.
+            </p>
+            <div style="background: rgba(0,0,0,0.3); padding: 0.75rem; border-radius: 8px; font-size: 0.85rem; margin-bottom: 1rem;">
+                <code>User: <strong>dr_house</strong> | Pass: <strong>doctor123</strong></code>
+            </div>
+            <a th:href="@{/login(demo='dr_house')}" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center;">
+                Log In as Doctor
+            </a>
+        </div>
+
+        <div class="card" style="border-top: 4px solid var(--primary);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <span style="font-size: 2rem;">👤</span>
+                <span class="badge badge-patient">ROLE_PATIENT</span>
+            </div>
+            <h3 style="margin-bottom: 0.5rem;">Patient Care Portal</h3>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.25rem;">
+                Search specialized physicians, book real-time conflict-free appointments, view prescription instructions, and inspect medical history.
+            </p>
+            <div style="background: rgba(0,0,0,0.3); padding: 0.75rem; border-radius: 8px; font-size: 0.85rem; margin-bottom: 1rem;">
+                <code>User: <strong>pat_john</strong> | Pass: <strong>patient123</strong></code>
+            </div>
+            <a th:href="@{/login(demo='pat_john')}" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center;">
+                Log In as Patient
+            </a>
+        </div>
+    </div>
+
+    <!-- Active Doctor Directory -->
+    <div class="card">
+        <div class="page-header" style="margin-bottom: 1.25rem;">
+            <div>
+                <h3>Our Board-Certified Specialists</h3>
+                <p class="page-subtitle">Available for in-person consultations and medical appointments</p>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Specialist</th>
+                        <th>Department</th>
+                        <th>Consultation Fee</th>
+                        <th>Room / Location</th>
+                        <th>Available Days</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="doc : ${doctors}">
+                        <td>
+                            <strong th:text="${doc.user.fullName}">Dr. Gregory House</strong>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);" th:text="${doc.user.email}">house@hospital.org</div>
+                        </td>
+                        <td>
+                            <span class="badge badge-doctor" th:text="${doc.specialization}">Diagnostic Medicine</span>
+                        </td>
+                        <td>
+                            <strong style="color: var(--accent-emerald);" th:text="'$' + ${doc.consultationFee}">$150.00</strong>
+                        </td>
+                        <td th:text="${doc.roomNumber}">Room 404</td>
+                        <td style="font-size: 0.85rem; color: var(--text-secondary);" th:text="${doc.availableDays}">Mon-Fri</td>
+                        <td>
+                            <a th:href="@{/login}" class="btn btn-secondary btn-sm">Book Visit</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 HealthPulse Medical Management System &bull; Portfolio Project #8 &bull; Spring Boot 3 &amp; Spring Security 6</p>
+</footer>
+
+</body>
+</html>

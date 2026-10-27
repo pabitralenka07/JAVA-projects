@@ -11,13 +11,13 @@ This document tracks the implementation progress of the 10 Java portfolio projec
 | 5 | [Exam Seating Arrangement](file:///Users/pabitra/Downloads/JAVA_Projects/05-exam-seating-arrangement) | `05-exam-seating-arrangement` | Core Java DSA, Constraint Scheduling, CSV/PDF | ✅ Done | 7 passing | [Preview](file:///Users/pabitra/Downloads/JAVA_Projects/docs/screenshots/05-exam-seating-preview.svg) |
 | 6 | [Online Survey System](file:///Users/pabitra/Downloads/JAVA_Projects/06-online-survey-system) | `06-online-survey-system` | Spring Boot, Thymeleaf, Spring Data JPA, Chart.js | ✅ Done | 11 passing | [Preview](file:///Users/pabitra/Downloads/JAVA_Projects/docs/screenshots/06-online-survey-preview.svg) |
 | 7 | [Online Resume Builder](file:///Users/pabitra/Downloads/JAVA_Projects/07-online-resume-builder) | `07-online-resume-builder` | Spring Boot, Thymeleaf, PDF Generation (OpenPDF) | ✅ Done | 11 passing | [Preview](file:///Users/pabitra/Downloads/JAVA_Projects/docs/screenshots/07-online-resume-preview.svg) |
-| 8 | [Medical Management System](file:///Users/pabitra/Downloads/JAVA_Projects/08-medical-management-system) | `08-medical-management-system` | Spring Boot, Spring Security, Role-Based Access, JPA | 🔄 In progress (Phase 1) | - | - |
+| 8 | [Medical Management System](file:///Users/pabitra/Downloads/JAVA_Projects/08-medical-management-system) | `08-medical-management-system` | Spring Boot, Spring Security, Role-Based Access, JPA | ✅ Done | 16 passing | [Preview](file:///Users/pabitra/Downloads/JAVA_Projects/docs/screenshots/08-medical-management-preview.svg) |
 | 9 | [ISP Automation System](file:///Users/pabitra/Downloads/JAVA_Projects/09-isp-automation) | `09-isp-automation` | Spring Boot, JPA, `@Scheduled` Billing, Ticketing | ⏳ Not started | - | - |
 | 10 | [Face Detection Application](file:///Users/pabitra/Downloads/JAVA_Projects/10-face-detection) | `10-face-detection` | JavaCV / OpenCV, Haar Cascades, Ethics & Privacy | ⏳ Not started | - | - |
 
 ---
 
 ## Overall Status
-- **Completed**: 7 / 10
-- **In Progress**: 1 / 10
-- **Current Step**: Project 8 Phase 1 (Domain Models, Services & Unit Tests)
+- **Completed**: 8 / 10
+- **In Progress**: 0 / 10
+- **Current Step**: Project 8 Complete. Ready for Project 9.

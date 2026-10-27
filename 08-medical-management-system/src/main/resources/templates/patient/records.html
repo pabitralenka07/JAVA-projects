@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Records - HealthPulse Clinic</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a th:href="@{/patient/dashboard}" class="nav-brand">
+        <span class="logo-icon">🩺</span>
+        <span>HealthPulse &bull; Patient Care Portal</span>
+    </a>
+    <nav class="nav-links">
+        <a th:href="@{/patient/dashboard}" class="btn btn-secondary btn-sm">&larr; Back to Portal</a>
+    </nav>
+</header>
+
+<main class="container">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Electronic Medical Records (EMR)</h1>
+            <p class="page-subtitle">Your clinical diagnostic records, treatment summaries, and physician notes</p>
+        </div>
+        <button class="btn btn-secondary" onclick="window.print()">🖨️ Print Health Records</button>
+    </div>
+
+    <div th:if="${#lists.isEmpty(records)}" class="card" style="text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📋</div>
+        <p>No electronic diagnostic records found in your clinical profile.</p>
+    </div>
+
+    <div th:if="${!#lists.isEmpty(records)}" style="display: grid; gap: 1.5rem;">
+        <div th:each="r : ${records}" class="card" style="border-left: 4px solid var(--accent-indigo);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+                <div>
+                    <h3 style="color: var(--text-primary); margin-bottom: 0.25rem;" th:text="${r.diagnosis}">
+                        Acute Bronchitis
+                    </h3>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary);">
+                        Attending Physician: <strong style="color: var(--text-primary);" th:text="${r.doctor.user.fullName}">Dr. Watson</strong>
+                        (<span th:text="${r.doctor.specialization}">General Medicine</span>) &bull;
+                        Consultation Date: <span th:text="${#temporals.format(r.recordDate, 'MMMM dd, yyyy')}">October 22, 2026</span>
+                    </div>
+                </div>
+                <span class="badge badge-admin">Confidential EMR</span>
+            </div>
+
+            <div th:if="${r.symptoms}" style="background: rgba(0,0,0,0.25); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1rem;">
+                <h5 style="color: var(--accent-amber); margin-bottom: 0.35rem; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em;">
+                    Clinical Presentation &amp; Symptoms
+                </h5>
+                <div style="font-size: 0.92rem; line-height: 1.6;" th:text="${r.symptoms}">
+                    Severe dry cough, chest tightness, fever for 4 days.
+                </div>
+            </div>
+
+            <div th:if="${r.treatmentPlan}" style="background: rgba(0,0,0,0.25); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1rem;">
+                <h5 style="color: var(--accent-teal); margin-bottom: 0.35rem; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em;">
+                    Treatment &amp; Care Protocol
+                </h5>
+                <div style="font-size: 0.92rem; line-height: 1.6;" th:text="${r.treatmentPlan}">
+                    Inhaler 2x daily, oral hydration, rest.
+                </div>
+            </div>
+
+            <div th:if="${r.notes}" style="font-size: 0.85rem; color: var(--text-muted); font-style: italic;">
+                <strong>Physician Clinical Notes:</strong> <span th:text="${r.notes}">Notes</span>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 HealthPulse Medical Management System</p>
+</footer>
+
+</body>
+</html>

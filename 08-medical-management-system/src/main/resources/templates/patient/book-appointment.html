@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Consultation - HealthPulse Clinic</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a th:href="@{/patient/dashboard}" class="nav-brand">
+        <span class="logo-icon">🩺</span>
+        <span>HealthPulse &bull; Patient Care Portal</span>
+    </a>
+    <nav class="nav-links">
+        <a th:href="@{/patient/dashboard}" class="btn btn-secondary btn-sm">&larr; Back to Portal</a>
+    </nav>
+</header>
+
+<main class="container" style="max-width: 720px; margin-top: 2rem;">
+    <div th:if="${errorMessage}" class="alert alert-error">
+        <span>⚠️</span>
+        <span th:text="${errorMessage}">Error message</span>
+    </div>
+
+    <!-- Filter by Specialization -->
+    <div class="card" style="margin-bottom: 1.5rem; padding: 1.25rem;">
+        <form th:action="@{/patient/appointments/new}" method="get" style="display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 220px;">
+                <label for="filterSpec" style="font-size: 0.85rem;">Filter Specialists by Medical Department</label>
+                <select id="filterSpec" name="specialization">
+                    <option value="">All Clinical Departments</option>
+                    <option th:each="spec : ${specializations}" th:value="${spec}" th:text="${spec}" th:selected="${spec == selectedSpecialization}">
+                        Cardiology
+                    </option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-secondary" style="padding: 0.7rem 1.25rem;">Filter</button>
+        </form>
+    </div>
+
+    <div class="card" style="padding: 2.25rem;">
+        <div style="margin-bottom: 2rem;">
+            <div class="badge badge-patient" style="margin-bottom: 0.5rem;">Schedule Consultation</div>
+            <h2 style="font-size: 1.6rem; margin-bottom: 0.25rem;">Book Doctor Appointment</h2>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                Select your attending specialist, preferred consultation slot, and describe your symptoms.
+            </p>
+        </div>
+
+        <form th:action="@{/patient/appointments}" method="post">
+            <div class="form-group">
+                <label for="doctorId">Attending Specialist &bull; Department *</label>
+                <select id="doctorId" name="doctorId" required>
+                    <option value="" disabled selected>Select a physician...</option>
+                    <option th:each="doc : ${doctors}" th:value="${doc.id}"
+                            th:text="${doc.user.fullName} + ' (' + ${doc.specialization} + ') - $' + ${doc.consultationFee} + ' [Room ' + ${doc.roomNumber} + ']'">
+                        Dr. Gregory House (Diagnostic Medicine) - $150.00 [Room 404]
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="appointmentDateTime">Desired Consultation Date &amp; Time *</label>
+                <input type="datetime-local" id="appointmentDateTime" name="appointmentDateTime" required>
+                <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.35rem;">
+                    Our conflict scheduling engine will automatically verify physician availability for this exact time slot.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="reason">Chief Complaint &amp; Reason for Visit *</label>
+                <textarea id="reason" name="reason" rows="3" required placeholder="Please describe symptoms, onset duration, medications currently taken..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 0.8rem; font-size: 1rem; margin-top: 1rem;">
+                📅 Confirm Appointment Booking &rarr;
+            </button>
+        </form>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 HealthPulse Medical Management System</p>
+</footer>
+
+<script>
+    // Set min datetime to today
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    document.getElementById('appointmentDateTime').min = now.toISOString().slice(0,16);
+</script>
+
+</body>
+</html>

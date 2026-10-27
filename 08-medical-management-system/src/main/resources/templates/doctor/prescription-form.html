@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Prescription - Doctor Workbench</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a th:href="@{/doctor/dashboard}" class="nav-brand">
+        <span class="logo-icon">🩺</span>
+        <span>HealthPulse &bull; Clinical Workbench</span>
+    </a>
+    <nav class="nav-links">
+        <a th:href="@{/doctor/dashboard}" class="btn btn-secondary btn-sm">&larr; Back to Workbench</a>
+    </nav>
+</header>
+
+<main class="container" style="max-width: 680px; margin-top: 2rem;">
+    <div class="card" style="padding: 2.25rem;">
+        <div style="margin-bottom: 2rem;">
+            <div class="badge badge-doctor" style="margin-bottom: 0.5rem;">Digital Rx Prescription</div>
+            <h2 style="font-size: 1.6rem; margin-bottom: 0.25rem;">Issue Prescription</h2>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                Prescribing for patient: <strong style="color: var(--text-primary);" th:text="${patient.user.fullName}">John Doe</strong>
+                (DOB: <span th:text="${patient.dateOfBirth}">1990-05-15</span> &bull; Blood: <span th:text="${patient.bloodGroup}">O+</span>)
+            </p>
+        </div>
+
+        <form th:action="@{/doctor/prescriptions}" method="post">
+            <input type="hidden" name="patientId" th:value="${patient.id}">
+            <input type="hidden" name="appointmentId" th:value="${appointmentId}">
+
+            <div class="form-group">
+                <label for="medications">Prescribed Medications *</label>
+                <textarea id="medications" name="medications" rows="3" required placeholder="e.g. 1. Amoxicillin 500mg capsules (15 caps)&#10;2. Paracetamol 650mg tablets (10 tabs)"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="dosageInstructions">Dosage &amp; Administration Instructions *</label>
+                <textarea id="dosageInstructions" name="dosageInstructions" rows="3" required placeholder="e.g. Take 1 capsule 3x daily after meals for 5 days. Do not skip doses."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="notes">Clinical Advice / Precautionary Notes</label>
+                <textarea id="notes" name="notes" rows="2" placeholder="e.g. Drink plenty of water. Return immediately if allergic reaction develops."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 0.75rem; font-size: 1rem; margin-top: 1rem;">
+                💊 Issue &amp; Save Prescription
+            </button>
+        </form>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 HealthPulse Medical Management System</p>
+</footer>
+
+</body>
+</html>

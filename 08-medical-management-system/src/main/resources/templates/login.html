@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - HealthPulse Clinic Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a th:href="@{/}" class="nav-brand">
+        <span class="logo-icon">🩺</span>
+        <span>HealthPulse Clinic</span>
+    </a>
+    <nav class="nav-links">
+        <a th:href="@{/}" class="btn btn-secondary">Home</a>
+        <a th:href="@{/register}" class="btn btn-primary">New Patient</a>
+    </nav>
+</header>
+
+<main class="container" style="max-width: 520px; margin-top: 3rem;">
+    <!-- Demo Credentials Quick Selector -->
+    <div class="demo-banner">
+        <div>
+            <strong style="display: block; font-size: 0.9rem;">⚡ 1-Click Demo Logins:</strong>
+            <span style="font-size: 0.8rem; color: var(--text-secondary);">Click any role to autofill credentials</span>
+        </div>
+        <div class="demo-pills">
+            <button type="button" class="demo-pill-btn" onclick="fillCredentials('admin', 'admin123')">🛡️ Admin</button>
+            <button type="button" class="demo-pill-btn" onclick="fillCredentials('dr_house', 'doctor123')">🩺 Doctor</button>
+            <button type="button" class="demo-pill-btn" onclick="fillCredentials('pat_john', 'patient123')">👤 Patient</button>
+        </div>
+    </div>
+
+    <!-- Alert Messages -->
+    <div th:if="${errorMessage}" class="alert alert-error">
+        <span>⚠️</span>
+        <span th:text="${errorMessage}">Error message</span>
+    </div>
+
+    <div th:if="${successMessage}" class="alert alert-success">
+        <span>✅</span>
+        <span th:text="${successMessage}">Success message</span>
+    </div>
+
+    <!-- Login Card -->
+    <div class="card" style="padding: 2.25rem;">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔐</div>
+            <h2 style="font-size: 1.6rem; margin-bottom: 0.35rem;">Portal Sign In</h2>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                Secure Access for Administrators, Medical Staff &amp; Patients
+            </p>
+        </div>
+
+        <form th:action="@{/login}" method="post">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required autofocus placeholder="Enter your username">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 0.75rem; font-size: 1rem; margin-top: 1rem;">
+                Sign In to Portal
+            </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-secondary);">
+            Don't have a patient account?
+            <a th:href="@{/register}" style="color: var(--primary); text-decoration: none; font-weight: 600;">Register here</a>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 HealthPulse Medical Management System &bull; Spring Security 6 RBAC</p>
+</footer>
+
+<script>
+    function fillCredentials(username, password) {
+        document.getElementById('username').value = username;
+        document.getElementById('password').value = password;
+    }
+
+    // Auto-fill from URL query param if present
+    const urlParams = new URLSearchParams(window.location.search);
+    const demo = urlParams.get('demo');
+    if (demo === 'admin') fillCredentials('admin', 'admin123');
+    else if (demo === 'dr_house') fillCredentials('dr_house', 'doctor123');
+    else if (demo === 'pat_john') fillCredentials('pat_john', 'patient123');
+</script>
+
+</body>
+</html>

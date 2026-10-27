@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Certified Doctor - Admin Portal</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a th:href="@{/admin/dashboard}" class="nav-brand">
+        <span class="logo-icon">🛡️</span>
+        <span>HealthPulse &bull; Hospital Administration</span>
+    </a>
+    <nav class="nav-links">
+        <a th:href="@{/admin/dashboard}" class="btn btn-secondary btn-sm">&larr; Back to Dashboard</a>
+    </nav>
+</header>
+
+<main class="container" style="max-width: 700px; margin-top: 2rem;">
+    <div th:if="${errorMessage}" class="alert alert-error">
+        <span>⚠️</span>
+        <span th:text="${errorMessage}">Error message</span>
+    </div>
+
+    <div class="card" style="padding: 2.25rem;">
+        <div style="margin-bottom: 2rem;">
+            <div class="badge badge-doctor" style="margin-bottom: 0.5rem;">Staff Onboarding</div>
+            <h2 style="font-size: 1.6rem; margin-bottom: 0.25rem;">Register New Doctor</h2>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                Create staff credentials and specify specialization, clinic room, and weekly availability.
+            </p>
+        </div>
+
+        <form th:action="@{/admin/doctors}" method="post">
+            <h4 style="color: var(--accent-teal); margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                Account Credentials
+            </h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label for="username">Doctor Username *</label>
+                    <input type="text" id="username" name="username" required placeholder="e.g. dr_adams">
+                </div>
+                <div class="form-group">
+                    <label for="password">Initial Password *</label>
+                    <input type="password" id="password" name="password" required placeholder="Temporary password">
+                </div>
+            </div>
+
+            <h4 style="color: var(--accent-teal); margin: 1.25rem 0 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                Doctor Information &amp; Clinical Details
+            </h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label for="fullName">Full Professional Name *</label>
+                    <input type="text" id="fullName" name="fullName" required placeholder="e.g. Dr. Patch Adams">
+                </div>
+                <div class="form-group">
+                    <label for="email">Hospital Email *</label>
+                    <input type="email" id="email" name="email" required placeholder="e.g. adams@hospital.org">
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label for="specialization">Medical Specialization *</label>
+                    <input type="text" id="specialization" name="specialization" required placeholder="e.g. Cardiology, Pediatrics">
+                </div>
+                <div class="form-group">
+                    <label for="consultationFee">Consultation Fee (USD) *</label>
+                    <input type="number" step="0.01" id="consultationFee" name="consultationFee" value="100.00" required>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label for="roomNumber">Clinic Room / Suite</label>
+                    <input type="text" id="roomNumber" name="roomNumber" placeholder="e.g. Suite 204">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Contact Phone</label>
+                    <input type="text" id="phone" name="phone" placeholder="+1-555-0155">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="availableDays">Weekly Available Days</label>
+                <input type="text" id="availableDays" name="availableDays" value="Monday,Tuesday,Wednesday,Thursday,Friday">
+            </div>
+
+            <div class="form-group">
+                <label for="bio">Professional Biography / Credentials</label>
+                <textarea id="bio" name="bio" rows="3" placeholder="Board certifications, degrees, clinical areas of focus..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 0.75rem; font-size: 1rem; margin-top: 1rem;">
+                Save &amp; Onboard Doctor
+            </button>
+        </form>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 HealthPulse Medical Management System</p>
+</footer>
+
+</body>
+</html>

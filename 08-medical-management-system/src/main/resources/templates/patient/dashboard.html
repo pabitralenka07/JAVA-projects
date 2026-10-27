@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Portal - HealthPulse Clinic</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a th:href="@{/patient/dashboard}" class="nav-brand">
+        <span class="logo-icon">🩺</span>
+        <span>HealthPulse &bull; Patient Care Portal</span>
+    </a>
+    <nav class="nav-links">
+        <span class="user-badge">
+            <span class="badge badge-patient">PATIENT</span>
+            <span th:text="${patient.user.fullName}">John Doe</span>
+        </span>
+        <a th:href="@{/patient/prescriptions}" class="btn btn-secondary btn-sm">My Prescriptions</a>
+        <a th:href="@{/patient/records}" class="btn btn-secondary btn-sm">Medical Records</a>
+        <form th:action="@{/logout}" method="post" style="display: inline;">
+            <button type="submit" class="btn btn-secondary btn-sm">Sign Out</button>
+        </form>
+    </nav>
+</header>
+
+<main class="container">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title" th:text="'Hello, ' + ${patient.user.fullName}">Hello, John Doe</h1>
+            <p class="page-subtitle">
+                Blood Group: <strong style="color: var(--accent-rose);" th:text="${patient.bloodGroup != null ? patient.bloodGroup : 'N/A'}">O+</strong> &bull;
+                DOB: <span th:text="${patient.dateOfBirth != null ? patient.dateOfBirth : 'N/A'}">1990-05-15</span> &bull;
+                Emergency: <span th:text="${patient.emergencyContact != null ? patient.emergencyContact : 'N/A'}">555-0202</span>
+            </p>
+        </div>
+        <div>
+            <a th:href="@{/patient/appointments/new}" class="btn btn-primary">
+                <span>➕</span> Book New Consultation
+            </a>
+        </div>
+    </div>
+
+    <!-- Alert Notifications -->
+    <div th:if="${successMessage}" class="alert alert-success">
+        <span>✅</span>
+        <span th:text="${successMessage}">Success message</span>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-error">
+        <span>⚠️</span>
+        <span th:text="${errorMessage}">Error message</span>
+    </div>
+
+    <!-- Appointments Section -->
+    <div class="card" style="margin-bottom: 2rem;">
+        <div class="page-header" style="margin-bottom: 1rem;">
+            <h3>My Scheduled Consultations</h3>
+            <span class="badge badge-patient" th:text="${#lists.size(appointments)} + ' Total Visits'">Visits</span>
+        </div>
+
+        <div th:if="${#lists.isEmpty(appointments)}" style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted);">
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📅</div>
+            <p>You have no scheduled appointments.</p>
+            <a th:href="@{/patient/appointments/new}" class="btn btn-primary" style="margin-top: 1rem;">Book an Appointment Now</a>
+        </div>
+
+        <div th:if="${!#lists.isEmpty(appointments)}" class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date &amp; Time</th>
+                        <th>Attending Specialist</th>
+                        <th>Department</th>
+                        <th>Consultation Fee</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="appt : ${appointments}">
+                        <td>
+                            <strong th:text="${#temporals.format(appt.appointmentDateTime, 'EEE, MMM dd, yyyy HH:mm')}">Thu, Oct 29, 2026 10:00</strong>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);" th:text="'Ref #' + ${appt.id}">#1</div>
+                        </td>
+                        <td>
+                            <strong th:text="${appt.doctor.user.fullName}">Dr. Gregory House</strong>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);" th:text="${appt.doctor.roomNumber}">Room 404</div>
+                        </td>
+                        <td>
+                            <span class="badge badge-doctor" th:text="${appt.doctor.specialization}">Diagnostic Medicine</span>
+                        </td>
+                        <td>
+                            <strong style="color: var(--accent-emerald);" th:text="'$' + ${appt.doctor.consultationFee}">$150.00</strong>
+                        </td>
+                        <td>
+                            <span th:if="${appt.status.name() == 'SCHEDULED'}" class="badge badge-scheduled">Scheduled</span>
+                            <span th:if="${appt.status.name() == 'CONFIRMED'}" class="badge badge-confirmed">Confirmed</span>
+                            <span th:if="${appt.status.name() == 'COMPLETED'}" class="badge badge-completed">Completed</span>
+                            <span th:if="${appt.status.name() == 'CANCELLED'}" class="badge badge-cancelled">Cancelled</span>
+                        </td>
+                        <td>
+                            <form th:if="${appt.status.name() == 'SCHEDULED' || appt.status.name() == 'CONFIRMED'}"
+                                  th:action="@{/patient/appointments/{id}/cancel(id=${appt.id})}" method="post">
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Cancel this consultation?')">
+                                    Cancel Visit
+                                </button>
+                            </form>
+                            <span th:if="${appt.status.name() == 'COMPLETED'}" style="color: var(--accent-emerald); font-size: 0.85rem;">
+                                &check; Visit Finished
+                            </span>
+                            <span th:if="${appt.status.name() == 'CANCELLED'}" style="color: var(--text-muted); font-size: 0.85rem;">
+                                Cancelled
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Quick Overview: Prescriptions & Medical Records -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.5rem;">
+        <!-- Recent Prescriptions -->
+        <div class="card">
+            <div class="page-header" style="margin-bottom: 1rem;">
+                <h4>Recent Prescriptions</h4>
+                <a th:href="@{/patient/prescriptions}" class="btn btn-secondary btn-sm">View All &rarr;</a>
+            </div>
+            <div th:if="${#lists.isEmpty(prescriptions)}" style="color: var(--text-muted); padding: 1rem 0;">
+                No prescriptions issued yet.
+            </div>
+            <div th:if="${!#lists.isEmpty(prescriptions)}">
+                <div th:each="p, iter : ${prescriptions}" th:if="${iter.index < 3}" style="background: rgba(0,0,0,0.2); padding: 0.85rem; border-radius: 8px; margin-bottom: 0.75rem; border-left: 3px solid var(--accent-teal);">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.35rem;">
+                        <span th:text="${p.doctor.user.fullName}">Dr. Watson</span>
+                        <span th:text="${#temporals.format(p.issueDate, 'MMM dd, yyyy')}">Oct 22, 2026</span>
+                    </div>
+                    <div style="font-weight: 600; font-size: 0.9rem;" th:text="${p.medications}">Amoxicillin 500mg</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Health Records -->
+        <div class="card">
+            <div class="page-header" style="margin-bottom: 1rem;">
+                <h4>Clinical Diagnostic History</h4>
+                <a th:href="@{/patient/records}" class="btn btn-secondary btn-sm">View EMR &rarr;</a>
+            </div>
+            <div th:if="${#lists.isEmpty(records)}" style="color: var(--text-muted); padding: 1rem 0;">
+                No medical diagnoses recorded yet.
+            </div>
+            <div th:if="${!#lists.isEmpty(records)}">
+                <div th:each="r, iter : ${records}" th:if="${iter.index < 3}" style="background: rgba(0,0,0,0.2); padding: 0.85rem; border-radius: 8px; margin-bottom: 0.75rem; border-left: 3px solid var(--accent-indigo);">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.35rem;">
+                        <strong style="color: var(--text-primary);" th:text="${r.diagnosis}">Acute Bronchitis</strong>
+                        <span th:text="${#temporals.format(r.recordDate, 'MMM dd, yyyy')}">Oct 22, 2026</span>
+                    </div>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary);" th:text="${r.treatmentPlan}">Rest, hydration, inhaler</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 HealthPulse Medical Management System &bull; Patient Care Portal</p>
+</footer>
+
+</body>
+</html>

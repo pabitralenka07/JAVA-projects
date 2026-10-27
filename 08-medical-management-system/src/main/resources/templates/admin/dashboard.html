@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - HealthPulse Clinic</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a th:href="@{/admin/dashboard}" class="nav-brand">
+        <span class="logo-icon">🛡️</span>
+        <span>HealthPulse &bull; Hospital Administration</span>
+    </a>
+    <nav class="nav-links">
+        <span class="user-badge">
+            <span class="badge badge-admin">ADMIN</span>
+            <span sec:authentication="name">admin</span>
+        </span>
+        <form th:action="@{/logout}" method="post" style="display: inline;">
+            <button type="submit" class="btn btn-secondary btn-sm">Sign Out</button>
+        </form>
+    </nav>
+</header>
+
+<main class="container">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Executive Command Center</h1>
+            <p class="page-subtitle">Hospital-wide metrics, clinical staff rosters, and patient scheduling</p>
+        </div>
+        <div>
+            <a th:href="@{/admin/doctors/new}" class="btn btn-primary">
+                <span>➕</span> Add New Doctor
+            </a>
+        </div>
+    </div>
+
+    <!-- Alert Notifications -->
+    <div th:if="${successMessage}" class="alert alert-success">
+        <span>✅</span>
+        <span th:text="${successMessage}">Success message</span>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-error">
+        <span>⚠️</span>
+        <span th:text="${errorMessage}">Error message</span>
+    </div>
+
+    <!-- KPI Metric Cards -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(20, 184, 166, 0.2); color: var(--accent-teal);">🩺</div>
+            <div>
+                <div class="stat-val" th:text="${doctorCount}">3</div>
+                <div class="stat-lbl">Active Specialists</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(2, 132, 199, 0.2); color: var(--primary);">👤</div>
+            <div>
+                <div class="stat-val" th:text="${patientCount}">2</div>
+                <div class="stat-lbl">Registered Patients</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(245, 158, 11, 0.2); color: var(--accent-amber);">📅</div>
+            <div>
+                <div class="stat-val" th:text="${appointmentCount}">3</div>
+                <div class="stat-lbl">Total Appointments</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(16, 185, 129, 0.2); color: var(--accent-emerald);">💊</div>
+            <div>
+                <div class="stat-val" th:text="${prescriptionCount}">1</div>
+                <div class="stat-lbl">Active Prescriptions</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Doctors Table -->
+    <div class="card" style="margin-bottom: 2rem;">
+        <div class="page-header" style="margin-bottom: 1rem;">
+            <h3>Clinical Medical Staff</h3>
+            <span class="badge badge-doctor" th:text="${doctorCount} + ' Doctors On Duty'">3 Doctors On Duty</span>
+        </div>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Doctor</th>
+                        <th>Specialization</th>
+                        <th>Fee</th>
+                        <th>Room</th>
+                        <th>Schedule</th>
+                        <th>Contact Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="doc : ${doctors}">
+                        <td>
+                            <strong th:text="${doc.user.fullName}">Dr. Gregory House</strong>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);" th:text="'@' + ${doc.user.username}">@dr_house</div>
+                        </td>
+                        <td>
+                            <span class="badge badge-doctor" th:text="${doc.specialization}">Diagnostic Medicine</span>
+                        </td>
+                        <td>
+                            <strong style="color: var(--accent-emerald);" th:text="'$' + ${doc.consultationFee}">$150.00</strong>
+                        </td>
+                        <td th:text="${doc.roomNumber}">Room 404</td>
+                        <td style="font-size: 0.85rem;" th:text="${doc.availableDays}">Mon-Fri</td>
+                        <td th:text="${doc.user.email}">house@hospital.org</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Recent Appointments Table -->
+    <div class="card">
+        <div class="page-header" style="margin-bottom: 1rem;">
+            <h3>Hospital Appointment Log</h3>
+            <span class="badge badge-admin">Master Schedule</span>
+        </div>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Date &amp; Time</th>
+                        <th>Patient</th>
+                        <th>Attending Doctor</th>
+                        <th>Reason / Notes</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="appt : ${appointments}">
+                        <td><code th:text="'#' + ${appt.id}">#1</code></td>
+                        <td th:text="${#temporals.format(appt.appointmentDateTime, 'MMM dd, yyyy HH:mm')}">Oct 29, 2026 10:00</td>
+                        <td>
+                            <strong th:text="${appt.patient.user.fullName}">John Doe</strong>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);" th:text="${appt.patient.user.phone}">555-0100</div>
+                        </td>
+                        <td>
+                            <span th:text="${appt.doctor.user.fullName}">Dr. Gregory House</span>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);" th:text="${appt.doctor.specialization}">Diagnostic Medicine</div>
+                        </td>
+                        <td style="max-width: 250px;">
+                            <div th:text="${appt.reason}">Persistent fever</div>
+                            <div th:if="${appt.notes}" style="font-size: 0.8rem; color: var(--text-muted); font-style: italic;" th:text="${appt.notes}">Notes</div>
+                        </td>
+                        <td>
+                            <span th:if="${appt.status.name() == 'SCHEDULED'}" class="badge badge-scheduled">Scheduled</span>
+                            <span th:if="${appt.status.name() == 'CONFIRMED'}" class="badge badge-confirmed">Confirmed</span>
+                            <span th:if="${appt.status.name() == 'COMPLETED'}" class="badge badge-completed">Completed</span>
+                            <span th:if="${appt.status.name() == 'CANCELLED'}" class="badge badge-cancelled">Cancelled</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 HealthPulse Medical Management System &bull; Admin Portal</p>
+</footer>
+
+</body>
+</html>
