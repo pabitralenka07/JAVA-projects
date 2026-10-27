@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="50%" stop-color="#121829"/>
+      <stop offset="100%" stop-color="#070a12"/>
+    </linearGradient>
+    <radialGradient id="glowViolet" cx="15%" cy="15%" r="60%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowCyan" cx="85%" cy="85%" r="55%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Glass card styling -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.75"/>
+    </linearGradient>
+    <linearGradient id="badgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <linearGradient id="btnPdfGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Deep Canvas Background -->
+  <rect width="1200" height="780" fill="url(#bgGrad)"/>
+  <rect width="1200" height="780" fill="url(#glowViolet)"/>
+  <rect width="1200" height="780" fill="url(#glowCyan)"/>
+
+  <!-- Top Navigation Bar -->
+  <rect x="0" y="0" width="1200" height="70" fill="#0b0f19" fill-opacity="0.85" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <rect x="40" y="16" width="38" height="38" rx="8" fill="url(#badgeGrad)"/>
+  <text x="59" y="41" fill="#ffffff" font-family="'Outfit', sans-serif" font-size="20" font-weight="800" text-anchor="middle">R</text>
+  <text x="90" y="41" fill="#ffffff" font-family="'Outfit', sans-serif" font-size="20" font-weight="700">ResumeSphere</text>
+  
+  <text x="770" y="41" fill="#8b5cf6" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="600">My Resumes</text>
+  <rect x="880" y="18" width="130" height="34" rx="8" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+  <text x="945" y="40" fill="#f8fafc" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600" text-anchor="middle">✏️ Edit Details</text>
+  <rect x="1025" y="18" width="135" height="34" rx="8" fill="url(#btnPdfGrad)"/>
+  <text x="1092" y="40" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" text-anchor="middle">📥 Download PDF</text>
+
+  <!-- Left Column: Form Controls & Quick Selector -->
+  <rect x="40" y="100" width="380" height="645" rx="16" fill="url(#cardGrad)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <text x="65" y="135" fill="#c4b5fd" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700">RESUME BUILDER CONTROLS</text>
+  <text x="65" y="165" fill="#ffffff" font-family="'Outfit', sans-serif" font-size="20" font-weight="700">Software Engineer Resume</text>
+  <text x="65" y="188" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="13">ATS-compliant layout with OpenPDF export.</text>
+
+  <!-- Template Selector -->
+  <rect x="65" y="215" width="330" height="42" rx="8" fill="rgba(10,14,26,0.6)" stroke="rgba(139,92,246,0.3)" stroke-width="1"/>
+  <text x="80" y="241" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600">Template: Modern Tech (ATS)</text>
+  <text x="375" y="241" fill="#8b5cf6" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" text-anchor="end">▼</text>
+
+  <!-- Sections Accordion Mock -->
+  <g transform="translate(65, 275)">
+    <!-- Item 1 -->
+    <rect y="0" width="330" height="46" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <text x="15" y="28" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600">👤 Personal Info &amp; Contact</text>
+    <text x="315" y="28" fill="#10b981" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" text-anchor="end">✓ Completed</text>
+
+    <!-- Item 2 -->
+    <rect y="56" width="330" height="46" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <text x="15" y="84" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600">📝 Professional Summary</text>
+    <text x="315" y="84" fill="#10b981" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" text-anchor="end">✓ 4 lines</text>
+
+    <!-- Item 3 -->
+    <rect y="112" width="330" height="46" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <text x="15" y="140" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600">💼 Work Experience (2 items)</text>
+    <text x="315" y="140" fill="#10b981" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" text-anchor="end">✓ Active</text>
+
+    <!-- Item 4 -->
+    <rect y="168" width="330" height="46" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <text x="15" y="196" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600">🚀 Key Projects (2 items)</text>
+    <text x="315" y="196" fill="#10b981" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" text-anchor="end">✓ Active</text>
+
+    <!-- Item 5 -->
+    <rect y="224" width="330" height="46" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <text x="15" y="252" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600">⚡ Technical Skills (3 categories)</text>
+    <text x="315" y="252" fill="#10b981" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" text-anchor="end">✓ 15 tags</text>
+
+    <!-- Item 6 -->
+    <rect y="280" width="330" height="46" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <text x="15" y="308" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600">🎓 Education (B.Tech CS)</text>
+    <text x="315" y="308" fill="#10b981" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" text-anchor="end">✓ 9.35 GPA</text>
+  </g>
+
+  <!-- Export Info Box -->
+  <rect x="65" y="650" width="330" height="70" rx="10" fill="rgba(16,185,129,0.08)" stroke="rgba(16,185,129,0.3)" stroke-width="1"/>
+  <text x="80" y="675" fill="#34d399" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700">✓ OPENPDF ATS ENGINE READY</text>
+  <text x="80" y="698" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="11">Single-page A4 format &bull; 100% Vector &bull; Crisp typography</text>
+
+  <!-- Right Column: A4 Paper Sheet Preview -->
+  <g transform="translate(450, 100)">
+    <!-- Shadow & A4 Sheet -->
+    <rect x="0" y="0" width="710" height="645" rx="6" fill="#ffffff" filter="drop-shadow(0 20px 30px rgba(0,0,0,0.7))"/>
+    
+    <!-- Resume Content (ATS Modern Tech) -->
+    <!-- Name & Headline -->
+    <text x="35" y="45" fill="#0f172a" font-family="'Outfit', sans-serif" font-size="24" font-weight="800" letter-spacing="0.5">ALEX MERCER</text>
+    <text x="35" y="66" fill="#7c3aed" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700">Full-Stack Java Engineer | Core Java, Spring Boot 3 &amp; System Design</text>
+    
+    <!-- Contact Bar -->
+    <text x="35" y="85" fill="#64748b" font-family="'Plus Jakarta Sans', sans-serif" font-size="10">alex.mercer@cs.tech.edu &bull; +1 (555) 382-9012 &bull; San Francisco, CA &bull; github.com/alex-mercer-dev &bull; linkedin.com/in/alex-mercer-swe</text>
+
+    <!-- Professional Summary Section -->
+    <text x="35" y="115" fill="#7c3aed" font-family="'Outfit', sans-serif" font-size="12" font-weight="700" letter-spacing="0.5">PROFESSIONAL SUMMARY</text>
+    <line x1="35" y1="122" x2="675" y2="122" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="35" y="138" fill="#334155" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5">Passionate 3rd-year CS undergraduate with a deep focus on Java 17+, clean Object-Oriented Architecture,</text>
+    <text x="35" y="152" fill="#334155" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5">and scalable Spring Boot systems. Proven track record designing multi-threaded applications, constraint engines,</text>
+    <text x="35" y="166" fill="#334155" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5">and zero-setup database architectures thoroughly tested with JUnit 5.</text>
+
+    <!-- Technical Skills Section -->
+    <text x="35" y="195" fill="#7c3aed" font-family="'Outfit', sans-serif" font-size="12" font-weight="700" letter-spacing="0.5">TECHNICAL SKILLS</text>
+    <line x1="35" y1="202" x2="675" y2="202" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="35" y="218" fill="#0f172a" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-weight="700">Languages: <tspan font-weight="400" fill="#334155">Java 17/21 (LTS), SQL, Python, TypeScript, Bash</tspan></text>
+    <text x="35" y="233" fill="#0f172a" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-weight="700">Frameworks &amp; Backend: <tspan font-weight="400" fill="#334155">Spring Boot 3, Spring Data JPA, Hibernate ORM, JUnit 5, Mockito</tspan></text>
+    <text x="35" y="248" fill="#0f172a" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-weight="700">Tools &amp; Infrastructure: <tspan font-weight="400" fill="#334155">Maven, Docker, H2 Database, MySQL 8.4, Git, OpenPDF, Linux</tspan></text>
+
+    <!-- Work Experience Section -->
+    <text x="35" y="278" fill="#7c3aed" font-family="'Outfit', sans-serif" font-size="12" font-weight="700" letter-spacing="0.5">WORK EXPERIENCE</text>
+    <line x1="35" y1="285" x2="675" y2="285" stroke="#7c3aed" stroke-width="1.5"/>
+    
+    <!-- Experience 1 -->
+    <text x="35" y="302" fill="#0f172a" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700">Software Engineering Intern <tspan font-weight="400" fill="#334155">| CloudScale Systems Inc.</tspan></text>
+    <text x="675" y="302" fill="#64748b" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-style="italic" text-anchor="end">May 2025 – Aug 2025 (San Francisco, CA)</text>
+    <text x="45" y="318" fill="#334155" font-family="'Plus Jakarta Sans', sans-serif" font-size="9">&bull; Engineered high-performance Spring Boot 3 microservices handling 25,000+ daily telemetry requests</text>
+    <text x="45" y="331" fill="#334155" font-family="'Plus Jakarta Sans', sans-serif" font-size="9">&bull; Optimized JPA queries with custom fetch joins, eliminating N+1 bottlenecks and cutting latency by 42%</text>
+    <text x="45" y="344" fill="#334155" font-family="'Plus Jakarta Sans', sans-serif" font-size="9">&bull; Wrote comprehensive test suites with JUnit 5 and MockMvc achieving over 90% branch coverage</text>
+
+    <!-- Experience 2 -->
+    <text x="35" y="368" fill="#0f172a" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700">Teaching Assistant - OOP <tspan font-weight="400" fill="#334155">| Dept. of Computer Science</tspan></text>
+    <text x="675" y="368" fill="#64748b" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-style="italic" text-anchor="end">Jan 2025 – May 2025 (Campus)</text>
+    <text x="45" y="384" fill="#334155" font-family="'Plus Jakarta Sans', sans-serif" font-size="9">&bull; Mentored 120+ students on Core Java, SOLID principles, exception hierarchies, and multi-threading</text>
+
+    <!-- Key Projects Section -->
+    <text x="35" y="415" fill="#7c3aed" font-family="'Outfit', sans-serif" font-size="12" font-weight="700" letter-spacing="0.5">KEY PROJECTS</text>
+    <line x1="35" y1="422" x2="675" y2="422" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="35" y="439" fill="#0f172a" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700">Java Projects 10-Module Portfolio <tspan font-style="italic" font-size="9.5" fill="#7c3aed">(Java 17, Spring Boot, JPA, OpenPDF)</tspan></text>
+    <text x="675" y="439" fill="#64748b" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" text-decoration="underline" text-anchor="end">github.com/alex-mercer-dev/java-projects</text>
+    <text x="35" y="454" fill="#334155" font-family="'Plus Jakarta Sans', sans-serif" font-size="9">Architected a production-ready Maven multi-module portfolio covering cryptographic tools, DSA solvers, and web apps.</text>
+
+    <text x="35" y="476" fill="#0f172a" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700">Constraint-Satisfaction Seating Solver <tspan font-style="italic" font-size="9.5" fill="#7c3aed">(Core Java, CSP, OpenPDF)</tspan></text>
+    <text x="675" y="476" fill="#64748b" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" text-decoration="underline" text-anchor="end">github.com/alex-mercer-dev/exam-seating</text>
+    <text x="35" y="491" fill="#334155" font-family="'Plus Jakarta Sans', sans-serif" font-size="9">Engineered a room allocation algorithm enforcing orthogonal non-adjacent same-subject constraints for exam halls.</text>
+
+    <!-- Education Section -->
+    <text x="35" y="522" fill="#7c3aed" font-family="'Outfit', sans-serif" font-size="12" font-weight="700" letter-spacing="0.5">EDUCATION</text>
+    <line x1="35" y1="529" x2="675" y2="529" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="35" y="546" fill="#0f172a" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700">B.Tech in Computer Science &amp; Engineering <tspan font-weight="400" fill="#334155">— Apex Institute of Technology</tspan></text>
+    <text x="675" y="546" fill="#64748b" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" text-anchor="end">2023 – 2027 | <tspan font-weight="700" fill="#0f172a">CGPA 9.35 / 10.0</tspan></text>
+
+    <!-- Certifications Section -->
+    <text x="35" y="578" fill="#7c3aed" font-family="'Outfit', sans-serif" font-size="12" font-weight="700" letter-spacing="0.5">CERTIFICATIONS</text>
+    <line x1="35" y1="585" x2="675" y2="585" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="35" y="602" fill="#0f172a" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-weight="700">Oracle Certified Professional: Java SE 17 Developer <tspan font-weight="400" fill="#334155">&bull; Oracle (2025)</tspan></text>
+    <text x="35" y="618" fill="#0f172a" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-weight="700">AWS Certified Solutions Architect - Associate <tspan font-weight="400" fill="#334155">&bull; Amazon Web Services (2025)</tspan></text>
+  </g>
+</svg>

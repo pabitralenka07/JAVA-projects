@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${resume.fullName + ' - Resume Preview | ResumeSphere'}">Resume Preview</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        @media print {
+            .navbar, .preview-toolbar, .footer { display: none !important; }
+            body { background: #fff !important; }
+            .resume-sheet-wrapper { background: #fff !important; padding: 0 !important; }
+            .resume-sheet { box-shadow: none !important; width: 100% !important; padding: 0 !important; }
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-container">
+            <a th:href="@{/}" class="brand">
+                <span class="brand-badge">R</span>
+                <span>ResumeSphere</span>
+            </a>
+            <ul class="nav-links">
+                <li><a th:href="@{/resumes}" class="nav-link">&larr; My Resumes</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Floating Action Toolbar -->
+    <div style="background: rgba(18, 24, 41, 0.95); border-bottom: 1px solid var(--border-glass); padding: 0.85rem 1.5rem; position: sticky; top: 62px; z-index: 90; backdrop-filter: blur(12px);" class="preview-toolbar">
+        <div style="max-width: 1150px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <span style="font-weight: 700; color: #fff; font-size: 1.05rem;" th:text="${resume.title}">Software Engineer</span>
+                <span th:if="${resume.template.name() == 'MODERN_TECH'}" class="badge badge-tech">Modern Tech</span>
+                <span th:if="${resume.template.name() == 'EXECUTIVE'}" class="badge badge-exec">Executive Classic</span>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem;">
+                <a th:href="@{'/resumes/' + ${resume.id} + '/edit'}" class="btn btn-secondary btn-sm" id="btn-edit-resume">
+                    ✏️ Edit Content
+                </a>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="window.print()">
+                    🖨️ Print
+                </button>
+                <a th:href="@{'/resumes/' + ${resume.id} + '/pdf'}" class="btn btn-success btn-sm" id="btn-download-pdf" target="_blank">
+                    📥 Download ATS PDF
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Paper Sheet Container -->
+    <main class="resume-sheet-wrapper">
+        <article th:class="'resume-sheet ' + ${resume.template.templateKey}">
+            <!-- Header -->
+            <header class="resume-header">
+                <h1 class="resume-name" th:text="${resume.fullName}">Alex Mercer</h1>
+                <div class="resume-headline" th:if="${resume.headline != null and !resume.headline.isBlank()}" th:text="${resume.headline}">
+                    Full-Stack Java Engineer
+                </div>
+                <div class="resume-contact">
+                    <span th:if="${resume.email != null}" th:text="${resume.email}">alex@example.com</span>
+                    <span th:if="${resume.phone != null and !resume.phone.isBlank()}" th:text="' &bull; ' + ${resume.phone}"> &bull; +1 (555) 019-2834</span>
+                    <span th:if="${resume.location != null and !resume.location.isBlank()}" th:text="' &bull; ' + ${resume.location}"> &bull; San Francisco, CA</span>
+                    <span th:if="${resume.githubUrl != null and !resume.githubUrl.isBlank()}" th:text="' &bull; ' + ${resume.githubUrl}"> &bull; github.com/user</span>
+                    <span th:if="${resume.linkedinUrl != null and !resume.linkedinUrl.isBlank()}" th:text="' &bull; ' + ${resume.linkedinUrl}"> &bull; linkedin.com/in/user</span>
+                </div>
+            </header>
+
+            <!-- Professional Summary -->
+            <section th:if="${resume.summary != null and !resume.summary.isBlank()}">
+                <h2 class="section-title">Professional Summary</h2>
+                <p style="margin-top: 4px; text-align: justify;" th:text="${resume.summary}">
+                    Driven Software Engineering undergraduate with a strong foundation in Java, Spring Boot, and scalable system design.
+                </p>
+            </section>
+
+            <!-- Technical Skills -->
+            <section th:if="${!resume.skillCategoryList.isEmpty()}">
+                <h2 class="section-title">Technical Skills</h2>
+                <div th:each="cat : ${resume.skillCategoryList}" style="margin-top: 3px;">
+                    <strong style="color: #0f172a;" th:text="${cat.categoryName} + ': '">Languages: </strong>
+                    <span th:text="${cat.skillsCsv}">Java 17/21, Spring Boot, SQL, Docker</span>
+                </div>
+            </section>
+
+            <!-- Work Experience -->
+            <section th:if="${!resume.experienceList.isEmpty()}">
+                <h2 class="section-title">Work Experience</h2>
+                <div th:each="exp : ${resume.experienceList}" style="margin-bottom: 8px;">
+                    <div class="resume-item-row">
+                        <div>
+                            <strong style="color: #0f172a; font-size: 10pt;" th:text="${exp.role}">Software Engineering Intern</strong>
+                            <span th:text="' &bull; ' + ${exp.company}"> &bull; CloudScale Inc.</span>
+                        </div>
+                        <div style="color: #64748b; font-size: 8.5pt; font-style: italic;">
+                            <span th:text="${exp.startDate}">May 2025</span> &ndash;
+                            <span th:text="${exp.currentRole ? 'Present' : exp.endDate}">Aug 2025</span>
+                            <span th:if="${exp.location != null and !exp.location.isBlank()}" th:text="' (' + ${exp.location} + ')'"> (SF, CA)</span>
+                        </div>
+                    </div>
+                    <ul class="resume-bullets" th:if="${!exp.bulletPointList.isEmpty()}">
+                        <li th:each="bp : ${exp.bulletPointList}" th:text="${bp}">Engineered microservices with Spring Boot 3</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Key Projects -->
+            <section th:if="${!resume.projectList.isEmpty()}">
+                <h2 class="section-title">Key Projects</h2>
+                <div th:each="proj : ${resume.projectList}" style="margin-bottom: 8px;">
+                    <div class="resume-item-row">
+                        <div>
+                            <strong style="color: #0f172a; font-size: 10pt;" th:text="${proj.title}">Java Projects Portfolio</strong>
+                            <span th:if="${proj.technologies != null and !proj.technologies.isBlank()}" style="color: #7c3aed; font-size: 8.5pt; font-style: italic;" th:text="' (' + ${proj.technologies} + ')'"> (Java, Spring Boot)</span>
+                        </div>
+                        <div style="font-size: 8.5pt;">
+                            <span style="color: #64748b; text-decoration: underline;" th:if="${proj.projectUrl != null and !proj.projectUrl.isBlank()}" th:text="${proj.projectUrl}">github.com/user/repo</span>
+                        </div>
+                    </div>
+                    <p style="margin-top: 2px;" th:if="${proj.description != null and !proj.description.isBlank()}" th:text="${proj.description}">
+                        Engineered multi-module portfolio.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Education -->
+            <section th:if="${!resume.educationList.isEmpty()}">
+                <h2 class="section-title">Education</h2>
+                <div th:each="edu : ${resume.educationList}" style="margin-bottom: 6px;">
+                    <div class="resume-item-row">
+                        <div>
+                            <strong style="color: #0f172a; font-size: 10pt;" th:text="${edu.degree + (edu.fieldOfStudy != null and !edu.fieldOfStudy.isBlank() ? ' in ' + edu.fieldOfStudy : '')}">B.Tech Computer Science</strong>
+                            <span th:text="' &bull; ' + ${edu.institution}"> &bull; Apex Tech</span>
+                        </div>
+                        <div style="color: #64748b; font-size: 8.5pt; font-style: italic;">
+                            <span th:text="${edu.startDate}">2023</span> &ndash; <span th:text="${edu.endDate}">2027</span>
+                            <span th:if="${edu.grade != null and !edu.grade.isBlank()}" style="font-weight: 700; color: #0f172a;" th:text="' | ' + ${edu.grade}"> | GPA 3.9/4.0</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Certifications -->
+            <section th:if="${!resume.certificationList.isEmpty()}">
+                <h2 class="section-title">Certifications &amp; Achievements</h2>
+                <div th:each="cert : ${resume.certificationList}" style="margin-top: 3px;">
+                    <strong style="color: #0f172a;" th:text="${cert.name}">Oracle Certified Professional Java SE 17</strong>
+                    <span th:if="${cert.issuer != null and !cert.issuer.isBlank()}" th:text="' &bull; ' + ${cert.issuer}"> &bull; Oracle</span>
+                    <span th:if="${cert.issueYear != null and !cert.issueYear.isBlank()}" style="color: #64748b; font-size: 8.5pt;" th:text="' (' + ${cert.issueYear} + ')'"> (2025)</span>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 ResumeSphere &bull; Spring Boot 3 &bull; OpenPDF Engine</p>
+    </footer>
+</body>
+</html>

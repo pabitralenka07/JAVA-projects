@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${resumeForm.id != null ? 'Edit Resume | ResumeSphere' : 'Create Resume | ResumeSphere'}">Resume Builder</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-container">
+            <a th:href="@{/}" class="brand">
+                <span class="brand-badge">R</span>
+                <span>ResumeSphere</span>
+            </a>
+            <ul class="nav-links">
+                <li><a th:href="@{/resumes}" class="nav-link">&larr; Back to Resumes</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container narrow-container">
+        <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
+
+        <div style="margin-bottom: 2rem;">
+            <h1 style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 800; color: #fff;"
+                th:text="${resumeForm.id != null ? 'Edit Resume' : 'Create New Resume'}">
+                Resume Builder
+            </h1>
+            <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                Fill out the sections below. Changes will be saved into the database and formatted directly into ATS-compliant PDFs.
+            </p>
+        </div>
+
+        <form th:action="@{/resumes}" th:object="${resumeForm}" method="post" id="resume-builder-form">
+            <input type="hidden" th:field="*{id}">
+
+            <!-- 1. Metadata & Template Selection -->
+            <div class="card" style="margin-bottom: 1.75rem;">
+                <h2 style="font-family: var(--font-heading); font-size: 1.25rem; color: #fff; margin-bottom: 1.25rem;">
+                    1. Resume Settings &amp; Template
+                </h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label class="form-label" for="res-title">Internal Resume Title *</label>
+                        <input type="text" id="res-title" th:field="*{title}" class="form-control" placeholder="e.g. Backend SWE Resume 2026" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="res-template">Layout / Template Style</label>
+                        <select id="res-template" th:field="*{template}" class="form-select">
+                            <option th:each="t : ${templates}" th:value="${t}" th:text="${t.displayName}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Personal & Contact Information -->
+            <div class="card" style="margin-bottom: 1.75rem;">
+                <h2 style="font-family: var(--font-heading); font-size: 1.25rem; color: #fff; margin-bottom: 1.25rem;">
+                    2. Personal &amp; Contact Details
+                </h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label class="form-label" for="res-name">Full Name *</label>
+                        <input type="text" id="res-name" th:field="*{fullName}" class="form-control" placeholder="e.g. Alex Mercer" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="res-headline">Professional Headline</label>
+                        <input type="text" id="res-headline" th:field="*{headline}" class="form-control" placeholder="e.g. Full-Stack Java Engineer | Cloud &amp; Distributed Systems">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label class="form-label" for="res-email">Email *</label>
+                        <input type="email" id="res-email" th:field="*{email}" class="form-control" placeholder="e.g. alex@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="res-phone">Phone Number</label>
+                        <input type="text" id="res-phone" th:field="*{phone}" class="form-control" placeholder="+1 (555) 019-2834">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="res-loc">Location</label>
+                        <input type="text" id="res-loc" th:field="*{location}" class="form-control" placeholder="San Francisco, CA">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 0;">
+                    <div class="form-group">
+                        <label class="form-label" for="res-github">GitHub Handle / URL</label>
+                        <input type="text" id="res-github" th:field="*{githubUrl}" class="form-control" placeholder="github.com/username">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="res-linkedin">LinkedIn Handle / URL</label>
+                        <input type="text" id="res-linkedin" th:field="*{linkedinUrl}" class="form-control" placeholder="linkedin.com/in/username">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="res-portfolio">Portfolio Website</label>
+                        <input type="text" id="res-portfolio" th:field="*{portfolioUrl}" class="form-control" placeholder="myportfolio.dev">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Professional Summary -->
+            <div class="card" style="margin-bottom: 1.75rem;">
+                <h2 style="font-family: var(--font-heading); font-size: 1.25rem; color: #fff; margin-bottom: 1rem;">
+                    3. Professional Summary
+                </h2>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <textarea th:field="*{summary}" rows="4" class="form-control" placeholder="2-4 sentences highlighting your engineering foundation, tech stack, and impact..."></textarea>
+                </div>
+            </div>
+
+            <!-- 4. Technical Skills -->
+            <div class="card" style="margin-bottom: 1.75rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h2 style="font-family: var(--font-heading); font-size: 1.25rem; color: #fff;">
+                        4. Technical Skills
+                    </h2>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="addSkillCategory()">+ Add Category</button>
+                </div>
+                <div id="skills-container">
+                    <div th:each="skill, sStat : *{skillCategories}" class="repeater-block skill-block">
+                        <div class="repeater-header">
+                            <span class="repeater-title" th:text="'Skill Category #' + ${sStat.count}">Category #1</span>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="this.closest('.repeater-block').remove()">Remove</button>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1rem;">
+                            <div>
+                                <label class="form-label">Category Name</label>
+                                <input type="text" th:field="*{skillCategories[__${sStat.index}__].categoryName}" class="form-control" placeholder="e.g. Languages, Frameworks">
+                            </div>
+                            <div>
+                                <label class="form-label">Comma-Separated Skills</label>
+                                <input type="text" th:field="*{skillCategories[__${sStat.index}__].skillsCsv}" class="form-control" placeholder="Java 17, Spring Boot, SQL, Docker, Git">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Work Experience -->
+            <div class="card" style="margin-bottom: 1.75rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h2 style="font-family: var(--font-heading); font-size: 1.25rem; color: #fff;">
+                        5. Work Experience &amp; Internships
+                    </h2>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="addExperience()">+ Add Experience</button>
+                </div>
+                <div id="experience-container">
+                    <div th:each="exp, eStat : *{experiences}" class="repeater-block exp-block">
+                        <div class="repeater-header">
+                            <span class="repeater-title" th:text="'Experience #' + ${eStat.count}">Experience #1</span>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="this.closest('.repeater-block').remove()">Remove</button>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.75rem;">
+                            <div>
+                                <label class="form-label">Company Name *</label>
+                                <input type="text" th:field="*{experiences[__${eStat.index}__].company}" class="form-control" placeholder="e.g. CloudScale Inc." required>
+                            </div>
+                            <div>
+                                <label class="form-label">Role / Job Title *</label>
+                                <input type="text" th:field="*{experiences[__${eStat.index}__].role}" class="form-control" placeholder="e.g. Software Engineering Intern" required>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 0.75rem;">
+                            <div>
+                                <label class="form-label">Location</label>
+                                <input type="text" th:field="*{experiences[__${eStat.index}__].location}" class="form-control" placeholder="San Francisco, CA / Remote">
+                            </div>
+                            <div>
+                                <label class="form-label">Start Date</label>
+                                <input type="text" th:field="*{experiences[__${eStat.index}__].startDate}" class="form-control" placeholder="May 2025">
+                            </div>
+                            <div>
+                                <label class="form-label">End Date</label>
+                                <input type="text" th:field="*{experiences[__${eStat.index}__].endDate}" class="form-control" placeholder="Aug 2025 / Present">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label">Achievements / Key Bullet Points (One per line)</label>
+                            <textarea th:field="*{experiences[__${eStat.index}__].bulletPoints}" rows="3" class="form-control" placeholder="• Engineered microservices reducing latency by 35%&#10;• Implemented Redis caching for auth sessions"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Key Projects -->
+            <div class="card" style="margin-bottom: 1.75rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h2 style="font-family: var(--font-heading); font-size: 1.25rem; color: #fff;">
+                        6. Key Projects
+                    </h2>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="addProject()">+ Add Project</button>
+                </div>
+                <div id="projects-container">
+                    <div th:each="proj, pStat : *{projects}" class="repeater-block proj-block">
+                        <div class="repeater-header">
+                            <span class="repeater-title" th:text="'Project #' + ${pStat.count}">Project #1</span>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="this.closest('.repeater-block').remove()">Remove</button>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.75rem;">
+                            <div>
+                                <label class="form-label">Project Title *</label>
+                                <input type="text" th:field="*{projects[__${pStat.index}__].title}" class="form-control" placeholder="e.g. Java Projects Portfolio" required>
+                            </div>
+                            <div>
+                                <label class="form-label">Technologies Used</label>
+                                <input type="text" th:field="*{projects[__${pStat.index}__].technologies}" class="form-control" placeholder="Java 17, Spring Boot, OpenPDF">
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 0.75rem;">
+                            <label class="form-label">Repository / Demo Link</label>
+                            <input type="text" th:field="*{projects[__${pStat.index}__].projectUrl}" class="form-control" placeholder="github.com/my-user/repo">
+                        </div>
+                        <div>
+                            <label class="form-label">Project Description</label>
+                            <textarea th:field="*{projects[__${pStat.index}__].description}" rows="2" class="form-control" placeholder="Brief 1-2 sentence overview of architecture and impact..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. Education -->
+            <div class="card" style="margin-bottom: 1.75rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h2 style="font-family: var(--font-heading); font-size: 1.25rem; color: #fff;">
+                        7. Education
+                    </h2>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="addEducation()">+ Add Education</button>
+                </div>
+                <div id="education-container">
+                    <div th:each="edu, edStat : *{educations}" class="repeater-block edu-block">
+                        <div class="repeater-header">
+                            <span class="repeater-title" th:text="'Education #' + ${edStat.count}">Education #1</span>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="this.closest('.repeater-block').remove()">Remove</button>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.75rem;">
+                            <div>
+                                <label class="form-label">Institution / University *</label>
+                                <input type="text" th:field="*{educations[__${edStat.index}__].institution}" class="form-control" placeholder="e.g. Apex Institute of Technology" required>
+                            </div>
+                            <div>
+                                <label class="form-label">Degree &amp; Major *</label>
+                                <input type="text" th:field="*{educations[__${edStat.index}__].degree}" class="form-control" placeholder="B.Tech in Computer Science" required>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                            <div>
+                                <label class="form-label">Start Year</label>
+                                <input type="text" th:field="*{educations[__${edStat.index}__].startDate}" class="form-control" placeholder="2023">
+                            </div>
+                            <div>
+                                <label class="form-label">Graduation Year</label>
+                                <input type="text" th:field="*{educations[__${edStat.index}__].endDate}" class="form-control" placeholder="2027">
+                            </div>
+                            <div>
+                                <label class="form-label">GPA / Honors</label>
+                                <input type="text" th:field="*{educations[__${edStat.index}__].grade}" class="form-control" placeholder="GPA: 3.9 / 4.0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Save & Submit Bar -->
+            <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
+                <a th:href="@{/resumes}" class="btn btn-secondary">Cancel</a>
+                <button type="submit" id="btn-save-resume" class="btn btn-primary" style="padding: 0.85rem 2.5rem; font-size: 1.05rem;">
+                    Save &amp; View Preview &rarr;
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        function addSkillCategory() {
+            const container = document.getElementById('skills-container');
+            const idx = container.querySelectorAll('.skill-block').length;
+            const block = document.createElement('div');
+            block.className = 'repeater-block skill-block';
+            block.innerHTML = `
+                <div class="repeater-header">
+                    <span class="repeater-title">Skill Category #\${idx + 1}</span>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="this.closest('.repeater-block').remove()">Remove</button>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1rem;">
+                    <div>
+                        <label class="form-label">Category Name</label>
+                        <input type="text" name="skillCategories[\${idx}].categoryName" class="form-control" placeholder="e.g. Cloud & DevOps">
+                    </div>
+                    <div>
+                        <label class="form-label">Comma-Separated Skills</label>
+                        <input type="text" name="skillCategories[\${idx}].skillsCsv" class="form-control" placeholder="AWS, Docker, Kubernetes">
+                    </div>
+                </div>
+            `;
+            container.appendChild(block);
+        }
+
+        function addExperience() {
+            const container = document.getElementById('experience-container');
+            const idx = container.querySelectorAll('.exp-block').length;
+            const block = document.createElement('div');
+            block.className = 'repeater-block exp-block';
+            block.innerHTML = `
+                <div class="repeater-header">
+                    <span class="repeater-title">Experience #\${idx + 1}</span>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="this.closest('.repeater-block').remove()">Remove</button>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.75rem;">
+                    <div>
+                        <label class="form-label">Company Name *</label>
+                        <input type="text" name="experiences[\${idx}].company" class="form-control" placeholder="e.g. NextGen Tech" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Role / Job Title *</label>
+                        <input type="text" name="experiences[\${idx}].role" class="form-control" placeholder="e.g. Software Engineer" required>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 0.75rem;">
+                    <div>
+                        <label class="form-label">Location</label>
+                        <input type="text" name="experiences[\${idx}].location" class="form-control" placeholder="Remote">
+                    </div>
+                    <div>
+                        <label class="form-label">Start Date</label>
+                        <input type="text" name="experiences[\${idx}].startDate" class="form-control" placeholder="Jan 2025">
+                    </div>
+                    <div>
+                        <label class="form-label">End Date</label>
+                        <input type="text" name="experiences[\${idx}].endDate" class="form-control" placeholder="Present">
+                    </div>
+                </div>
+                <div>
+                    <label class="form-label">Achievements / Key Bullet Points (One per line)</label>
+                    <textarea name="experiences[\${idx}].bulletPoints" rows="3" class="form-control" placeholder="• Key impact point 1&#10;• Key impact point 2"></textarea>
+                </div>
+            `;
+            container.appendChild(block);
+        }
+
+        function addProject() {
+            const container = document.getElementById('projects-container');
+            const idx = container.querySelectorAll('.proj-block').length;
+            const block = document.createElement('div');
+            block.className = 'repeater-block proj-block';
+            block.innerHTML = `
+                <div class="repeater-header">
+                    <span class="repeater-title">Project #\${idx + 1}</span>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="this.closest('.repeater-block').remove()">Remove</button>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.75rem;">
+                    <div>
+                        <label class="form-label">Project Title *</label>
+                        <input type="text" name="projects[\${idx}].title" class="form-control" placeholder="e.g. Distributed Task Queue" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Technologies Used</label>
+                        <input type="text" name="projects[\${idx}].technologies" class="form-control" placeholder="Java, RabbitMQ, Redis">
+                    </div>
+                </div>
+                <div style="margin-bottom: 0.75rem;">
+                    <label class="form-label">Repository / Demo Link</label>
+                    <input type="text" name="projects[\${idx}].projectUrl" class="form-control" placeholder="github.com/my-profile/project">
+                </div>
+                <div>
+                    <label class="form-label">Project Description</label>
+                    <textarea name="projects[\${idx}].description" rows="2" class="form-control" placeholder="Brief summary of engineering challenge and architecture..."></textarea>
+                </div>
+            `;
+            container.appendChild(block);
+        }
+
+        function addEducation() {
+            const container = document.getElementById('education-container');
+            const idx = container.querySelectorAll('.edu-block').length;
+            const block = document.createElement('div');
+            block.className = 'repeater-block edu-block';
+            block.innerHTML = `
+                <div class="repeater-header">
+                    <span class="repeater-title">Education #\${idx + 1}</span>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="this.closest('.repeater-block').remove()">Remove</button>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.75rem;">
+                    <div>
+                        <label class="form-label">Institution / University *</label>
+                        <input type="text" name="educations[\${idx}].institution" class="form-control" placeholder="e.g. University Name" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Degree & Major *</label>
+                        <input type="text" name="educations[\${idx}].degree" class="form-control" placeholder="e.g. B.Tech Computer Science" required>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                    <div>
+                        <label class="form-label">Start Year</label>
+                        <input type="text" name="educations[\${idx}].startDate" class="form-control" placeholder="2023">
+                    </div>
+                    <div>
+                        <label class="form-label">Graduation Year</label>
+                        <input type="text" name="educations[\${idx}].endDate" class="form-control" placeholder="2027">
+                    </div>
+                    <div>
+                        <label class="form-label">GPA / Honors</label>
+                        <input type="text" name="educations[\${idx}].grade" class="form-control" placeholder="CGPA: 9.0/10">
+                    </div>
+                </div>
+            `;
+            container.appendChild(block);
+        }
+    </script>
+
+    <footer class="footer">
+        <p>&copy; 2026 ResumeSphere &bull; Spring Boot 3 Dynamic Form Builder</p>
+    </footer>
+</body>
+</html>

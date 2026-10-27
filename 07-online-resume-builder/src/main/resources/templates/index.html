@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResumeSphere | Online Resume Builder</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-container">
+            <a th:href="@{/}" class="brand">
+                <span class="brand-badge">R</span>
+                <span>ResumeSphere</span>
+            </a>
+            <ul class="nav-links">
+                <li><a th:href="@{/resumes}" class="nav-link active">My Resumes</a></li>
+                <li><a th:href="@{/resumes/new}" class="btn btn-primary btn-sm" id="btn-create-resume">+ New Resume</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container">
+        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+        <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
+
+        <!-- Hero Header -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <span class="badge badge-tech" style="margin-bottom: 0.75rem;">⚡ ATS-FRIENDLY VECTOR PDF GENERATION</span>
+                <h1 style="font-family: var(--font-heading); font-size: 2.4rem; font-weight: 800; color: #fff; line-height: 1.2;">
+                    Craft Recruiter-Ready Resumes
+                </h1>
+                <p style="color: var(--text-secondary); max-width: 600px; margin-top: 0.35rem;">
+                    Design, live-preview, and export high-resolution ATS-optimized PDFs backed by Spring Boot 3 and OpenPDF.
+                </p>
+            </div>
+            <a th:href="@{/resumes/new}" class="btn btn-primary">
+                + Create New Resume
+            </a>
+        </div>
+
+        <!-- Resumes Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem;">
+            <div th:each="resume : ${resumes}" class="card card-interactive" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+                        <span th:if="${resume.template.name() == 'MODERN_TECH'}" class="badge badge-tech">Modern Tech</span>
+                        <span th:if="${resume.template.name() == 'EXECUTIVE'}" class="badge badge-exec">Executive Classic</span>
+                        <span style="color: var(--text-muted); font-size: 0.8rem;" th:text="${#temporals.format(resume.updatedAt, 'MMM dd, yyyy')}">Oct 27, 2026</span>
+                    </div>
+
+                    <h2 style="font-family: var(--font-heading); font-size: 1.35rem; color: #fff; margin-bottom: 0.35rem;" th:text="${resume.title}">
+                        Software Engineer - Backend
+                    </h2>
+                    <div style="font-size: 0.95rem; font-weight: 600; color: var(--cyan); margin-bottom: 0.75rem;" th:text="${resume.fullName}">
+                        Alex Mercer
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5; margin-bottom: 1.25rem;" th:text="${resume.headline}">
+                        Full-Stack Java Engineer | Cloud &amp; Distributed Systems
+                    </p>
+                </div>
+
+                <div>
+                    <div style="display: flex; gap: 1rem; color: var(--text-muted); font-size: 0.82rem; padding: 0.75rem 0; border-top: 1px solid var(--border-glass); margin-bottom: 1rem;">
+                        <span><strong style="color: #fff;" th:text="${resume.experienceList.size()}">2</strong> Experiences</span>
+                        <span><strong style="color: #fff;" th:text="${resume.projectList.size()}">2</strong> Projects</span>
+                        <span><strong style="color: #fff;" th:text="${resume.educationList.size()}">1</strong> Degrees</span>
+                    </div>
+
+                    <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+                        <a th:href="@{'/resumes/' + ${resume.id}}" class="btn btn-primary btn-sm" style="flex: 1;">
+                            👁️ Preview
+                        </a>
+                        <a th:href="@{'/resumes/' + ${resume.id} + '/pdf'}" class="btn btn-success btn-sm" target="_blank" title="Download ATS PDF">
+                            📥 PDF
+                        </a>
+                        <a th:href="@{'/resumes/' + ${resume.id} + '/edit'}" class="btn btn-secondary btn-sm" title="Edit Resume">
+                            ✏️ Edit
+                        </a>
+                        <form th:action="@{'/resumes/' + ${resume.id} + '/delete'}" method="post" style="display: inline;" onsubmit="return confirm('Delete this resume?');">
+                            <button type="submit" class="btn btn-danger btn-sm" title="Delete">✕</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty state -->
+            <div th:if="${resumes == null or #lists.isEmpty(resumes)}" class="card" style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem;">
+                <h3 style="font-family: var(--font-heading); font-size: 1.5rem; color: #fff; margin-bottom: 0.5rem;">No Resumes Yet</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Click "+ Create New Resume" to craft your first recruiter-ready CV.</p>
+                <a th:href="@{/resumes/new}" class="btn btn-primary">+ Create Resume</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 ResumeSphere &bull; Spring Boot 3 &bull; OpenPDF &bull; Thymeleaf</p>
+    </footer>
+</body>
+</html>
