@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | SurveySphere</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-container">
+            <a th:href="@{/}" class="brand">
+                <span class="brand-badge">S</span>
+                <span>SurveySphere Admin</span>
+            </a>
+            <ul class="nav-links">
+                <li><a th:href="@{/}" class="nav-link">Public Portal</a></li>
+                <li><a th:href="@{/admin}" class="nav-link active">Dashboard</a></li>
+                <li><a th:href="@{/admin/surveys/new}" class="btn btn-primary btn-sm" id="btn-create-survey">+ New Survey</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container">
+        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+        <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div>
+                <h1 style="font-family: var(--font-heading); font-size: 2rem; font-weight: 800; color: #fff;">
+                    Platform Analytics &amp; Management
+                </h1>
+                <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                    Monitor responses, deploy new questionnaires, and inspect real-time distributions.
+                </p>
+            </div>
+            <a th:href="@{/admin/surveys/new}" class="btn btn-primary">
+                + Create Survey
+            </a>
+        </div>
+
+        <!-- KPI Summary Cards -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">Total Surveys</div>
+                <div class="kpi-val" th:text="${totalSurveys}">2</div>
+            </div>
+            <div class="kpi-card cyan">
+                <div class="kpi-label">Total Responses</div>
+                <div class="kpi-val" th:text="${totalResponses}">20</div>
+            </div>
+            <div class="kpi-card emerald">
+                <div class="kpi-label">Active Surveys</div>
+                <div class="kpi-val" th:text="${activeSurveys}">2</div>
+            </div>
+        </div>
+
+        <!-- Survey Management Table -->
+        <div class="card" style="padding: 0; overflow: hidden;">
+            <div style="padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-glass); display: flex; justify-content: space-between; align-items: center;">
+                <h2 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700; color: #fff;">Surveys Overview</h2>
+                <span style="font-size: 0.85rem; color: var(--text-muted);" th:text="${surveys.size() + ' Total'}">2 Total</span>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Survey Title</th>
+                            <th>Status</th>
+                            <th>Questions</th>
+                            <th>Submissions</th>
+                            <th>Created</th>
+                            <th style="text-align: right;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="survey : ${surveys}">
+                            <td>
+                                <strong style="color: #fff; font-size: 1rem;" th:text="${survey.title}">Developer Survey</strong>
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">
+                                    Slug: <code style="color: var(--cyan);" th:text="${survey.slug}">developer-survey-2026</code>
+                                </div>
+                            </td>
+                            <td>
+                                <span th:if="${survey.active}" class="badge badge-active">Active</span>
+                                <span th:unless="${survey.active}" class="badge badge-closed">Closed</span>
+                            </td>
+                            <td>
+                                <span th:text="${survey.questions.size()}">4</span>
+                            </td>
+                            <td>
+                                <strong style="color: var(--cyan);" th:text="${survey.responseCount}">12</strong>
+                            </td>
+                            <td style="color: var(--text-secondary); font-size: 0.85rem;" th:text="${#temporals.format(survey.createdAt, 'MMM dd, yyyy')}">
+                                Oct 27, 2026
+                            </td>
+                            <td>
+                                <div style="display: flex; gap: 0.5rem; justify-content: flex-end; align-items: center;">
+                                    <a th:href="@{'/admin/surveys/' + ${survey.id} + '/results'}" class="btn btn-secondary btn-sm" title="View Results &amp; Charts">
+                                        📊 Analytics
+                                    </a>
+                                    <a th:href="@{'/survey/' + ${survey.slug}}" class="btn btn-secondary btn-sm" target="_blank" title="Open Public Form">
+                                        🔗 Form
+                                    </a>
+                                    <form th:action="@{'/admin/surveys/' + ${survey.id} + '/toggle'}" method="post" style="display: inline;">
+                                        <button type="submit" class="btn btn-secondary btn-sm" th:title="${survey.active ? 'Close Survey' : 'Reactivate Survey'}">
+                                            <span th:text="${survey.active ? 'Pause' : 'Activate'}">Pause</span>
+                                        </button>
+                                    </form>
+                                    <form th:action="@{'/admin/surveys/' + ${survey.id} + '/delete'}" method="post" style="display: inline;" onsubmit="return confirm('Delete this survey and all collected responses?');">
+                                        <button type="submit" class="btn btn-danger btn-sm" title="Delete Survey">
+                                            ✕
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr th:if="${surveys.isEmpty()}">
+                            <td colspan="6" style="text-align: center; padding: 3rem; color: var(--text-muted);">
+                                No surveys created yet. Click "+ Create Survey" to launch your first poll!
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 SurveySphere &bull; Spring Boot 3 Admin Dashboard</p>
+    </footer>
+</body>
+</html>

@@ -9,7 +9,7 @@ This document tracks the implementation progress of the 10 Java portfolio projec
 | 3 | [Snake Game](file:///Users/pabitra/Downloads/JAVA_Projects/03-snake-game) | `03-snake-game` | Swing 2D Graphics, Timer, File Persistence | ✅ Done | 10 passing | [Preview](file:///Users/pabitra/Downloads/JAVA_Projects/docs/screenshots/03-snake-game-preview.svg) |
 | 4 | [Electricity Bill System](file:///Users/pabitra/Downloads/JAVA_Projects/04-electricity-bill-system) | `04-electricity-bill-system` | JDBC / H2 & MySQL, Slab Calculations, PDF/Print | ✅ Done | 11 passing | [Preview](file:///Users/pabitra/Downloads/JAVA_Projects/docs/screenshots/04-electricity-bill-preview.svg) |
 | 5 | [Exam Seating Arrangement](file:///Users/pabitra/Downloads/JAVA_Projects/05-exam-seating-arrangement) | `05-exam-seating-arrangement` | Core Java DSA, Constraint Scheduling, CSV/PDF | ✅ Done | 7 passing | [Preview](file:///Users/pabitra/Downloads/JAVA_Projects/docs/screenshots/05-exam-seating-preview.svg) |
-| 6 | [Online Survey System](file:///Users/pabitra/Downloads/JAVA_Projects/06-online-survey-system) | `06-online-survey-system` | Spring Boot, Thymeleaf, Spring Data JPA, Chart.js | ⏳ Not started | - | - |
+| 6 | [Online Survey System](file:///Users/pabitra/Downloads/JAVA_Projects/06-online-survey-system) | `06-online-survey-system` | Spring Boot, Thymeleaf, Spring Data JPA, Chart.js | ✅ Done | 11 passing | [Preview](file:///Users/pabitra/Downloads/JAVA_Projects/docs/screenshots/06-online-survey-preview.svg) |
 | 7 | [Online Resume Builder](file:///Users/pabitra/Downloads/JAVA_Projects/07-online-resume-builder) | `07-online-resume-builder` | Spring Boot, Thymeleaf, PDF Generation (OpenPDF) | ⏳ Not started | - | - |
 | 8 | [Medical Management System](file:///Users/pabitra/Downloads/JAVA_Projects/08-medical-management-system) | `08-medical-management-system` | Spring Boot, Spring Security, Role-Based Access, JPA | ⏳ Not started | - | - |
 | 9 | [ISP Automation System](file:///Users/pabitra/Downloads/JAVA_Projects/09-isp-automation) | `09-isp-automation` | Spring Boot, JPA, `@Scheduled` Billing, Ticketing | ⏳ Not started | - | - |
@@ -18,6 +18,6 @@ This document tracks the implementation progress of the 10 Java portfolio projec
 ---
 
 ## Overall Status
-- **Completed**: 5 / 10
+- **Completed**: 6 / 10
 - **In Progress**: 0 / 10
-- **Current Step**: Project 5 Done (Ready for Project 6)
+- **Current Step**: Project 6 Done (Ready for Project 7)

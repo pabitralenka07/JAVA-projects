@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${survey.title + ' - Analytics | SurveySphere'}">Survey Analytics | SurveySphere</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!-- Chart.js 4 for clean, responsive canvas visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-container">
+            <a th:href="@{/}" class="brand">
+                <span class="brand-badge">S</span>
+                <span>SurveySphere Admin</span>
+            </a>
+            <ul class="nav-links">
+                <li><a th:href="@{/admin}" class="nav-link">&larr; Dashboard</a></li>
+                <li><a th:href="@{'/survey/' + ${survey.slug}}" class="btn btn-primary btn-sm" target="_blank">🔗 Public Form</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Top Hero Card -->
+        <div class="card" style="margin-bottom: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem;">
+                        <span class="badge badge-active" th:if="${survey.active}">Active Poll</span>
+                        <span class="badge badge-closed" th:unless="${survey.active}">Closed</span>
+                        <span style="color: var(--text-muted); font-size: 0.85rem;">
+                            Direct Link: <code>/survey/<span th:text="${survey.slug}">slug</span></code>
+                        </span>
+                    </div>
+                    <h1 style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem;" th:text="${survey.title}">
+                        Developer Ecosystem Survey
+                    </h1>
+                    <p style="color: var(--text-secondary); max-width: 650px;" th:text="${survey.description}">
+                        Survey description and goals.
+                    </p>
+                </div>
+
+                <div style="text-align: right; background: rgba(139, 92, 246, 0.08); border: 1px solid var(--border-glow); border-radius: var(--radius-md); padding: 1rem 1.5rem;">
+                    <div style="font-size: 0.8rem; text-transform: uppercase; color: #c4b5fd; font-weight: 600; letter-spacing: 0.05em;">Total Responses</div>
+                    <div style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 800; color: #fff;" id="total-submissions-val" th:text="${analytics.totalSubmissions}">
+                        12
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question Results Loop -->
+        <div th:each="qStat, qIdx : ${analytics.questionStats}" class="card" style="margin-bottom: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; border-bottom: 1px solid var(--border-glass); padding-bottom: 1rem;">
+                <div>
+                    <span class="badge badge-type" th:text="${qStat.questionType.displayName}">Single Choice</span>
+                    <h2 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 700; color: #fff; margin-top: 0.5rem;" th:text="${qStat.prompt}">
+                        Which programming language do you primarily use?
+                    </h2>
+                </div>
+                <div style="text-align: right; color: var(--text-secondary); font-size: 0.85rem;">
+                    <strong style="color: #fff;" th:text="${qStat.totalResponses}">12</strong> Responses
+                </div>
+            </div>
+
+            <!-- Choice Questions (Bar / Doughnut Chart + Stats Bars) -->
+            <div th:if="${qStat.questionType.name() != 'TEXT'}" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;">
+                <!-- Breakdown Table & Bars -->
+                <div>
+                    <div th:each="opt : ${qStat.optionStats}" style="margin-bottom: 1.25rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem; font-size: 0.92rem;">
+                            <span style="font-weight: 600; color: var(--text-primary);" th:text="${opt.optionText}">Java</span>
+                            <span style="color: var(--text-secondary);">
+                                <strong style="color: #fff;" th:text="${opt.count}">8</strong>
+                                (<span th:text="${opt.percentage}">66.7</span>%)
+                            </span>
+                        </div>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar-fill" th:style="'width: ' + ${opt.percentage} + '%;'"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Canvas Chart -->
+                <div class="chart-box">
+                    <canvas th:id="'chart-' + ${qStat.questionId}"></canvas>
+                </div>
+            </div>
+
+            <!-- Text Questions (Feedback Quotes) -->
+            <div th:if="${qStat.questionType.name() == 'TEXT'}">
+                <div th:if="${qStat.textResponses.isEmpty()}" style="color: var(--text-muted); padding: 1.5rem 0;">
+                    No qualitative feedback responses submitted yet.
+                </div>
+                <div th:unless="${qStat.textResponses.isEmpty()}">
+                    <div th:each="text : ${qStat.textResponses}" class="text-feedback-pill">
+                        &ldquo;<span th:text="${text}">Virtual threads simplify asynchronous programming drastically.</span>&rdquo;
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Chart.js Rendering Script -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const analyticsData = /*[[${analytics}]]*/ {};
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!analyticsData || !analyticsData.questionStats) return;
+
+            const vibrantPalette = [
+                '#8b5cf6', '#06b6d4', '#10b981', '#f59e0b', '#ec4899',
+                '#6366f1', '#14b8a6', '#f97316', '#a855f7', '#3b82f6'
+            ];
+
+            analyticsData.questionStats.forEach((q, idx) => {
+                if (q.questionType === 'TEXT') return;
+
+                const canvas = document.getElementById('chart-' + q.questionId);
+                if (!canvas) return;
+
+                const labels = q.optionStats.map(o => o.optionText);
+                const dataCounts = q.optionStats.map(o => o.count);
+                const bgColors = q.optionStats.map((_, i) => vibrantPalette[i % vibrantPalette.length]);
+
+                const chartType = (q.questionType === 'MULTIPLE_CHOICE') ? 'bar' : 'doughnut';
+
+                new Chart(canvas, {
+                    type: chartType,
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Votes',
+                            data: dataCounts,
+                            backgroundColor: bgColors,
+                            borderColor: 'rgba(10, 14, 26, 0.8)',
+                            borderWidth: 2,
+                            borderRadius: chartType === 'bar' ? 6 : 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: chartType === 'doughnut',
+                                position: 'bottom',
+                                labels: {
+                                    color: '#94a3b8',
+                                    font: { family: 'Plus Jakarta Sans', size: 12 },
+                                    boxWidth: 12,
+                                    padding: 14
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: '#121829',
+                                titleColor: '#fff',
+                                bodyColor: '#cbd5e1',
+                                borderColor: 'rgba(255, 255, 255, 0.1)',
+                                borderWidth: 1,
+                                padding: 10
+                            }
+                        },
+                        scales: chartType === 'bar' ? {
+                            x: {
+                                ticks: { color: '#94a3b8', font: { family: 'Plus Jakarta Sans' } },
+                                grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                ticks: { stepSize: 1, color: '#94a3b8', font: { family: 'Plus Jakarta Sans' } },
+                                grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                            }
+                        } : {}
+                    }
+                });
+            });
+        });
+        /*]]>*/
+    </script>
+
+    <footer class="footer">
+        <p>&copy; 2026 SurveySphere &bull; Spring Boot 3 &bull; Powered by Chart.js 4</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${survey.title + ' | SurveySphere'}">Take Survey | SurveySphere</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-container">
+            <a th:href="@{/}" class="brand">
+                <span class="brand-badge">S</span>
+                <span>SurveySphere</span>
+            </a>
+            <ul class="nav-links">
+                <li><a th:href="@{/}" class="nav-link">&larr; Back to Surveys</a></li>
+                <li><a th:href="@{/admin}" class="nav-link">Admin Console</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container narrow-container">
+        <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
+
+        <div class="card" style="margin-bottom: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <span class="badge badge-active" th:if="${survey.active}">Open for Submissions</span>
+                <span class="badge badge-closed" th:unless="${survey.active}">Survey Closed</span>
+                <span style="color: var(--text-muted); font-size: 0.85rem;" th:text="${survey.questions.size() + ' Questions'}">4 Questions</span>
+            </div>
+
+            <h1 style="font-family: var(--font-heading); font-size: 2rem; font-weight: 700; margin-bottom: 0.75rem; color: #fff;" th:text="${survey.title}">
+                Developer Ecosystem Survey
+            </h1>
+            <p style="color: var(--text-secondary); font-size: 0.98rem; line-height: 1.6;" th:text="${survey.description}">
+                Community survey description.
+            </p>
+        </div>
+
+        <div th:unless="${survey.active}" class="card" style="text-align: center; padding: 3rem 1.5rem;">
+            <h2 style="font-family: var(--font-heading); margin-bottom: 0.5rem;">This survey has been closed</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">The organizer is no longer accepting new responses.</p>
+            <a th:href="@{'/admin/surveys/' + ${survey.id} + '/results'}" class="btn btn-primary">View Results &rarr;</a>
+        </div>
+
+        <form th:if="${survey.active}" th:action="@{'/survey/' + ${survey.slug} + '/submit'}" method="post" id="survey-form">
+            <div th:each="question, stat : ${survey.questions}" class="card" style="margin-bottom: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary);" th:text="'QUESTION ' + ${stat.count}">QUESTION 1</span>
+                    <span th:if="${question.required}" style="font-size: 0.75rem; color: #f43f5e; font-weight: 600;">* Required</span>
+                </div>
+
+                <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 600; margin-bottom: 1.25rem; color: #fff;" th:text="${question.prompt}">
+                    Which programming language do you primarily use?
+                </h3>
+
+                <!-- Single Choice (Radio) -->
+                <div th:if="${question.questionType.name() == 'SINGLE_CHOICE'}">
+                    <div th:each="opt : ${question.options}">
+                        <label class="choice-option">
+                            <input type="radio" 
+                                   th:name="'answers[' + ${question.id} + ']'" 
+                                   th:value="${opt.id}" 
+                                   th:required="${question.required}">
+                            <span class="choice-label" th:text="${opt.optionText}">Java</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Multiple Choice (Checkbox) -->
+                <div th:if="${question.questionType.name() == 'MULTIPLE_CHOICE'}">
+                    <p class="form-text" style="margin-bottom: 0.75rem; color: var(--cyan);">Select all options that apply:</p>
+                    <div th:each="opt : ${question.options}">
+                        <label class="choice-option">
+                            <input type="checkbox" 
+                                   th:name="'multiAnswers[' + ${question.id} + ']'" 
+                                   th:value="${opt.id}">
+                            <span class="choice-label" th:text="${opt.optionText}">Docker</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Open Text / Feedback -->
+                <div th:if="${question.questionType.name() == 'TEXT'}">
+                    <textarea th:name="'answers[' + ${question.id} + ']'" 
+                              rows="4" 
+                              class="form-control" 
+                              placeholder="Type your response here..." 
+                              th:required="${question.required}"></textarea>
+                </div>
+            </div>
+
+            <div style="text-align: right; margin-top: 2rem;">
+                <button type="submit" id="btn-submit-survey" class="btn btn-primary" style="padding: 0.85rem 2rem; font-size: 1.05rem;">
+                    Submit Response &rarr;
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 SurveySphere &bull; Responses are anonymized &amp; aggregated</p>
+    </footer>
+</body>
+</html>

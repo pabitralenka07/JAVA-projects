@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="50%" stop-color="#121829"/>
+      <stop offset="100%" stop-color="#070a12"/>
+    </linearGradient>
+    <radialGradient id="glowViolet" cx="20%" cy="15%" r="60%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowCyan" cx="85%" cy="80%" r="55%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Glass card styling -->
+    <filter id="glassBlur" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.75"/>
+    </linearGradient>
+
+    <!-- Progress Gradients -->
+    <linearGradient id="progJava" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <linearGradient id="progDocker" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <linearGradient id="badgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Deep Canvas Background -->
+  <rect width="1200" height="780" fill="url(#bgGrad)"/>
+  <rect width="1200" height="780" fill="url(#glowViolet)"/>
+  <rect width="1200" height="780" fill="url(#glowCyan)"/>
+
+  <!-- Top Navigation Bar -->
+  <rect x="0" y="0" width="1200" height="70" fill="#0b0f19" fill-opacity="0.85" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <rect x="40" y="16" width="38" height="38" rx="8" fill="url(#badgeGrad)"/>
+  <text x="59" y="41" fill="#ffffff" font-family="'Outfit', sans-serif" font-size="20" font-weight="800" text-anchor="middle">S</text>
+  <text x="90" y="41" fill="#ffffff" font-family="'Outfit', sans-serif" font-size="20" font-weight="700">SurveySphere</text>
+  
+  <text x="750" y="41" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="500">Public Surveys</text>
+  <text x="880" y="41" fill="#8b5cf6" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="600">Admin Console</text>
+  <rect x="1010" y="18" width="150" height="34" rx="8" fill="url(#progJava)"/>
+  <text x="1085" y="40" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" text-anchor="middle">+ Create Survey</text>
+
+  <!-- Hero Header -->
+  <rect x="40" y="95" width="280" height="26" rx="13" fill="rgba(139,92,246,0.15)" stroke="rgba(139,92,246,0.4)" stroke-width="1"/>
+  <text x="180" y="112" fill="#c4b5fd" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="600" text-anchor="middle">⚡ FULL-STACK SPRING BOOT 3 PLATFORM</text>
+  <text x="40" y="160" fill="#ffffff" font-family="'Outfit', sans-serif" font-size="32" font-weight="800">Survey Analytics &amp; Real-Time Insights</text>
+  <text x="40" y="188" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="14">Dynamic questionnaire builder, JPA response aggregation, and Chart.js 4 visual telemetry.</text>
+
+  <!-- 3 Metric KPI Cards -->
+  <!-- Card 1 -->
+  <rect x="40" y="215" width="355" height="85" rx="14" fill="url(#cardGrad)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <rect x="40" y="215" width="4" height="85" fill="#8b5cf6"/>
+  <text x="60" y="245" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="600" letter-spacing="1">TOTAL SURVEYS</text>
+  <text x="60" y="282" fill="#ffffff" font-family="'Outfit', sans-serif" font-size="32" font-weight="800">2 Active</text>
+  <text x="360" y="275" fill="#8b5cf6" font-family="'Outfit', sans-serif" font-size="28" text-anchor="end">📋</text>
+
+  <!-- Card 2 -->
+  <rect x="422" y="215" width="355" height="85" rx="14" fill="url(#cardGrad)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <rect x="422" y="215" width="4" height="85" fill="#06b6d4"/>
+  <text x="442" y="245" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="600" letter-spacing="1">COLLECTED SUBMISSIONS</text>
+  <text x="442" y="282" fill="#ffffff" font-family="'Outfit', sans-serif" font-size="32" font-weight="800">20 Responses</text>
+  <text x="742" y="275" fill="#06b6d4" font-family="'Outfit', sans-serif" font-size="28" text-anchor="end">👥</text>
+
+  <!-- Card 3 -->
+  <rect x="805" y="215" width="355" height="85" rx="14" fill="url(#cardGrad)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <rect x="805" y="215" width="4" height="85" fill="#10b981"/>
+  <text x="825" y="245" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="600" letter-spacing="1">SYSTEM UPTIME</text>
+  <text x="825" y="282" fill="#ffffff" font-family="'Outfit', sans-serif" font-size="32" font-weight="800">100% Zero-Downtime</text>
+  <text x="1125" y="275" fill="#10b981" font-family="'Outfit', sans-serif" font-size="28" text-anchor="end">⚡</text>
+
+  <!-- Main Analytics Section (Two Columns) -->
+  <!-- Left Card: Question 1 Breakdown -->
+  <rect x="40" y="325" width="545" height="420" rx="16" fill="url(#cardGrad)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <rect x="60" y="345" width="115" height="22" rx="11" fill="rgba(139,92,246,0.18)" stroke="rgba(139,92,246,0.3)" stroke-width="1"/>
+  <text x="117" y="360" fill="#c4b5fd" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" text-anchor="middle">SINGLE CHOICE</text>
+  <text x="60" y="395" fill="#ffffff" font-family="'Outfit', sans-serif" font-size="16" font-weight="700">Primary Backend Language</text>
+  <text x="560" y="395" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" text-anchor="end">12 responses</text>
+
+  <!-- Progress Bar Rows -->
+  <!-- Java: 58.3% -->
+  <text x="60" y="435" fill="#f8fafc" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600">Java 17/21</text>
+  <text x="560" y="435" fill="#8b5cf6" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" text-anchor="end">7 votes (58.3%)</text>
+  <rect x="60" y="445" width="500" height="10" rx="5" fill="rgba(255,255,255,0.06)"/>
+  <rect x="60" y="445" width="292" height="10" rx="5" fill="url(#progJava)"/>
+
+  <!-- Python: 16.7% -->
+  <text x="60" y="485" fill="#f8fafc" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600">Python</text>
+  <text x="560" y="485" fill="#06b6d4" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" text-anchor="end">2 votes (16.7%)</text>
+  <rect x="60" y="495" width="500" height="10" rx="5" fill="rgba(255,255,255,0.06)"/>
+  <rect x="60" y="495" width="84" height="10" rx="5" fill="#06b6d4"/>
+
+  <!-- Go: 8.3% -->
+  <text x="60" y="535" fill="#f8fafc" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600">Go</text>
+  <text x="560" y="535" fill="#10b981" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" text-anchor="end">1 vote (8.3%)</text>
+  <rect x="60" y="545" width="500" height="10" rx="5" fill="rgba(255,255,255,0.06)"/>
+  <rect x="60" y="545" width="42" height="10" rx="5" fill="#10b981"/>
+
+  <!-- TypeScript: 8.3% -->
+  <text x="60" y="585" fill="#f8fafc" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600">TypeScript / Node.js</text>
+  <text x="560" y="585" fill="#f59e0b" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" text-anchor="end">1 vote (8.3%)</text>
+  <rect x="60" y="595" width="500" height="10" rx="5" fill="rgba(255,255,255,0.06)"/>
+  <rect x="60" y="595" width="42" height="10" rx="5" fill="#f59e0b"/>
+
+  <!-- Doughnut Mockup -->
+  <g transform="translate(310, 675)">
+    <circle r="46" fill="none" stroke="#8b5cf6" stroke-width="18" stroke-dasharray="168 290" stroke-dashoffset="0"/>
+    <circle r="46" fill="none" stroke="#06b6d4" stroke-width="18" stroke-dasharray="48 290" stroke-dashoffset="-168"/>
+    <circle r="46" fill="none" stroke="#10b981" stroke-width="18" stroke-dasharray="24 290" stroke-dashoffset="-216"/>
+    <circle r="46" fill="none" stroke="#f59e0b" stroke-width="18" stroke-dasharray="24 290" stroke-dashoffset="-240"/>
+    <circle r="46" fill="none" stroke="#ec4899" stroke-width="18" stroke-dasharray="24 290" stroke-dashoffset="-264"/>
+    <text y="5" fill="#ffffff" font-family="'Outfit', sans-serif" font-size="14" font-weight="700" text-anchor="middle">58% Java</text>
+  </g>
+
+  <!-- Right Card: Qualitative Feedback & Weekly Tools -->
+  <rect x="615" y="325" width="545" height="420" rx="16" fill="url(#cardGrad)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <rect x="635" y="345" width="130" height="22" rx="11" fill="rgba(6,182,212,0.18)" stroke="rgba(6,182,212,0.3)" stroke-width="1"/>
+  <text x="700" y="360" fill="#67e8f9" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" text-anchor="middle">QUALITATIVE FEEDBACK</text>
+  <text x="635" y="395" fill="#ffffff" font-family="'Outfit', sans-serif" font-size="16" font-weight="700">What Java features excite you most this year?</text>
+
+  <!-- Quote 1 -->
+  <rect x="635" y="420" width="505" height="54" rx="8" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <rect x="635" y="420" width="4" height="54" fill="#8b5cf6"/>
+  <text x="655" y="443" fill="#cbd5e1" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-style="italic">"Virtual threads (Project Loom) made concurrency code so clean</text>
+  <text x="655" y="460" fill="#cbd5e1" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-style="italic">and readable without reactive spaghetti."</text>
+
+  <!-- Quote 2 -->
+  <rect x="635" y="486" width="505" height="54" rx="8" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <rect x="635" y="486" width="4" height="54" fill="#06b6d4"/>
+  <text x="655" y="509" fill="#cbd5e1" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-style="italic">"Spring Boot 3 native image compilation with GraalVM for</text>
+  <text x="655" y="526" fill="#cbd5e1" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-style="italic">lightning-fast 30ms startup in microservices."</text>
+
+  <!-- Quote 3 -->
+  <rect x="635" y="552" width="505" height="54" rx="8" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <rect x="635" y="552" width="4" height="54" fill="#10b981"/>
+  <text x="655" y="575" fill="#cbd5e1" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-style="italic">"Pattern matching for switch and records drastically cut ceremony</text>
+  <text x="655" y="592" fill="#cbd5e1" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-style="italic">in complex domain logic."</text>
+
+  <!-- Weekly Tools Multi-Choice Bar chart miniature -->
+  <rect x="635" y="620" width="505" height="105" rx="8" fill="rgba(0,0,0,0.3)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <text x="650" y="642" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700">WEEKLY DEV TOOLS ADOPTION</text>
+  <rect x="650" y="655" width="28" height="50" rx="4" fill="#06b6d4"/>
+  <text x="664" y="690" fill="#fff" font-family="'Outfit', sans-serif" font-size="10" font-weight="700" text-anchor="middle">100%</text>
+  <text x="664" y="718" fill="#64748b" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" text-anchor="middle">Docker</text>
+
+  <rect x="710" y="680" width="28" height="25" rx="4" fill="#8b5cf6"/>
+  <text x="724" y="700" fill="#fff" font-family="'Outfit', sans-serif" font-size="10" font-weight="700" text-anchor="middle">50%</text>
+  <text x="724" y="718" fill="#64748b" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" text-anchor="middle">IntelliJ</text>
+
+  <rect x="770" y="688" width="28" height="17" rx="4" fill="#10b981"/>
+  <text x="784" y="703" fill="#fff" font-family="'Outfit', sans-serif" font-size="9" font-weight="700" text-anchor="middle">33%</text>
+  <text x="784" y="718" fill="#64748b" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" text-anchor="middle">VSCode</text>
+
+  <rect x="830" y="692" width="28" height="13" rx="4" fill="#f59e0b"/>
+  <text x="844" y="705" fill="#fff" font-family="'Outfit', sans-serif" font-size="9" font-weight="700" text-anchor="middle">25%</text>
+  <text x="844" y="718" fill="#64748b" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" text-anchor="middle">Postman</text>
+</svg>

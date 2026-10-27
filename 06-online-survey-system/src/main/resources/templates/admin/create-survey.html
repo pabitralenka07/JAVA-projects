@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Survey | SurveySphere Admin</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-container">
+            <a th:href="@{/}" class="brand">
+                <span class="brand-badge">S</span>
+                <span>SurveySphere Admin</span>
+            </a>
+            <ul class="nav-links">
+                <li><a th:href="@{/admin}" class="nav-link">&larr; Back to Dashboard</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container narrow-container">
+        <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
+
+        <div style="margin-bottom: 2rem;">
+            <h1 style="font-family: var(--font-heading); font-size: 2rem; font-weight: 800; color: #fff;">
+                Create New Survey
+            </h1>
+            <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                Define questionnaire metadata and configure single-choice, multiple-choice, or open-ended questions.
+            </p>
+        </div>
+
+        <form th:action="@{/admin/surveys}" th:object="${surveyRequest}" method="post" id="create-survey-form">
+            <!-- Survey Details Card -->
+            <div class="card" style="margin-bottom: 2rem;">
+                <h2 style="font-family: var(--font-heading); font-size: 1.25rem; margin-bottom: 1.25rem; color: #fff;">
+                    1. Survey Overview
+                </h2>
+
+                <div class="form-group">
+                    <label class="form-label" for="survey-title">Survey Title *</label>
+                    <input type="text" id="survey-title" th:field="*{title}" class="form-control" placeholder="e.g., Annual Tech Stack Survey 2026" required>
+                    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: #f43f5e; font-size: 0.8rem;"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="survey-desc">Description</label>
+                    <textarea id="survey-desc" th:field="*{description}" rows="3" class="form-control" placeholder="Briefly describe the purpose of this questionnaire..."></textarea>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label class="form-label" for="survey-slug">Custom URL Slug (Optional)</label>
+                    <input type="text" id="survey-slug" th:field="*{slug}" class="form-control" placeholder="e.g., tech-stack-2026 (auto-generated if left empty)">
+                    <p class="form-text">Will be accessible at: <code>/survey/your-slug</code></p>
+                </div>
+            </div>
+
+            <!-- Questions Card -->
+            <div class="card" style="margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+                    <h2 style="font-family: var(--font-heading); font-size: 1.25rem; color: #fff;">
+                        2. Questionnaire Items
+                    </h2>
+                    <button type="button" id="btn-add-question" class="btn btn-secondary btn-sm" onclick="addQuestionCard()">
+                        + Add Question
+                    </button>
+                </div>
+
+                <div id="questions-container">
+                    <div th:each="q, stat : *{questions}" class="card question-block" style="background: rgba(10, 14, 26, 0.4); border-color: rgba(255,255,255,0.06); margin-bottom: 1.25rem; padding: 1.25rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                            <span class="q-number" style="font-weight: 700; color: var(--primary); font-size: 0.85rem;" th:text="'QUESTION ' + ${stat.count}">QUESTION 1</span>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="removeQuestionCard(this)" title="Remove this question" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">Remove</button>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Question Prompt *</label>
+                            <input type="text" th:field="*{questions[__${stat.index}__].prompt}" class="form-control" placeholder="e.g. Which programming language do you primarily use?" required>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                            <div>
+                                <label class="form-label">Question Type</label>
+                                <select th:field="*{questions[__${stat.index}__].questionType}" class="form-select q-type-select" onchange="handleTypeChange(this)">
+                                    <option th:each="type : ${questionTypes}" th:value="${type}" th:text="${type.displayName}"></option>
+                                </select>
+                            </div>
+                            <div style="display: flex; align-items: center; padding-top: 1.8rem;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: var(--text-secondary); font-size: 0.9rem;">
+                                    <input type="checkbox" th:field="*{questions[__${stat.index}__].required}" style="accent-color: var(--primary); width: 16px; height: 16px;">
+                                    Required Answer
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="options-container" th:style="${q.questionType.name() == 'TEXT' ? 'display: none;' : 'display: block;'}">
+                            <label class="form-label">Answer Options (One option per line) *</label>
+                            <textarea th:field="*{questions[__${stat.index}__].optionsRaw}" rows="4" class="form-control" placeholder="Option 1&#10;Option 2&#10;Option 3"></textarea>
+                            <p class="form-text">Enter each selectable answer choice on a new line.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+                <a th:href="@{/admin}" class="btn btn-secondary">Cancel</a>
+                <button type="submit" id="btn-save-survey" class="btn btn-primary" style="padding: 0.8rem 2.2rem; font-size: 1rem;">
+                    Launch Survey &rarr;
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        function handleTypeChange(selectElem) {
+            const card = selectElem.closest('.question-block');
+            const optionsBox = card.querySelector('.options-container');
+            if (selectElem.value === 'TEXT') {
+                optionsBox.style.display = 'none';
+            } else {
+                optionsBox.style.display = 'block';
+            }
+        }
+
+        function removeQuestionCard(btn) {
+            const container = document.getElementById('questions-container');
+            if (container.querySelectorAll('.question-block').length <= 1) {
+                alert('A survey must have at least one question.');
+                return;
+            }
+            btn.closest('.question-block').remove();
+            reindexQuestions();
+        }
+
+        function addQuestionCard() {
+            const container = document.getElementById('questions-container');
+            const index = container.querySelectorAll('.question-block').length;
+            const newCard = document.createElement('div');
+            newCard.className = 'card question-block';
+            newCard.style.cssText = 'background: rgba(10, 14, 26, 0.4); border-color: rgba(255,255,255,0.06); margin-bottom: 1.25rem; padding: 1.25rem;';
+            newCard.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                    <span class="q-number" style="font-weight: 700; color: var(--primary); font-size: 0.85rem;">QUESTION \${index + 1}</span>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="removeQuestionCard(this)" title="Remove this question" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">Remove</button>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Question Prompt *</label>
+                    <input type="text" name="questions[\${index}].prompt" class="form-control" placeholder="e.g. Which programming language do you primarily use?" required>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                    <div>
+                        <label class="form-label">Question Type</label>
+                        <select name="questions[\${index}].questionType" class="form-select q-type-select" onchange="handleTypeChange(this)">
+                            <option value="SINGLE_CHOICE">Single Choice (Radio)</option>
+                            <option value="MULTIPLE_CHOICE">Multiple Choice (Checkbox)</option>
+                            <option value="TEXT">Open Text / Feedback</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; align-items: center; padding-top: 1.8rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: var(--text-secondary); font-size: 0.9rem;">
+                            <input type="checkbox" name="questions[\${index}].required" value="true" checked style="accent-color: var(--primary); width: 16px; height: 16px;">
+                            Required Answer
+                        </label>
+                    </div>
+                </div>
+                <div class="options-container">
+                    <label class="form-label">Answer Options (One option per line) *</label>
+                    <textarea name="questions[\${index}].optionsRaw" rows="4" class="form-control" placeholder="Option 1&#10;Option 2&#10;Option 3"></textarea>
+                    <p class="form-text">Enter each selectable answer choice on a new line.</p>
+                </div>
+            `;
+            container.appendChild(newCard);
+            reindexQuestions();
+        }
+
+        function reindexQuestions() {
+            const blocks = document.querySelectorAll('.question-block');
+            blocks.forEach((block, idx) => {
+                block.querySelector('.q-number').textContent = 'QUESTION ' + (idx + 1);
+                const promptInput = block.querySelector('input[name*=".prompt"]');
+                if (promptInput) promptInput.name = `questions[\${idx}].prompt`;
+                const typeSelect = block.querySelector('select[name*=".questionType"]');
+                if (typeSelect) typeSelect.name = `questions[\${idx}].questionType`;
+                const reqCheck = block.querySelector('input[type="checkbox"][name*=".required"]');
+                if (reqCheck) reqCheck.name = `questions[\${idx}].required`;
+                const optionsRaw = block.querySelector('textarea[name*=".optionsRaw"]');
+                if (optionsRaw) optionsRaw.name = `questions[\${idx}].optionsRaw`;
+            });
+        }
+    </script>
+
+    <footer class="footer">
+        <p>&copy; 2026 SurveySphere &bull; Spring Boot 3 &bull; Dynamic Form Engine</p>
+    </footer>
+</body>
+</html>

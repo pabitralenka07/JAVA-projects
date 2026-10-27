@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Response Recorded | SurveySphere</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-container">
+            <a th:href="@{/}" class="brand">
+                <span class="brand-badge">S</span>
+                <span>SurveySphere</span>
+            </a>
+            <ul class="nav-links">
+                <li><a th:href="@{/}" class="nav-link">All Surveys</a></li>
+                <li><a th:href="@{/admin}" class="nav-link">Admin Console</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container narrow-container" style="text-align: center; padding-top: 4rem;">
+        <div class="card" style="padding: 3.5rem 2rem;">
+            <div style="width: 72px; height: 72px; background: rgba(16, 185, 129, 0.15); border: 2px solid var(--emerald); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto; font-size: 2rem; color: var(--emerald); box-shadow: 0 0 25px var(--emerald-glow);">
+                ✓
+            </div>
+
+            <h1 style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 800; margin-bottom: 0.75rem; color: #fff;">
+                Thank You for Your Feedback!
+            </h1>
+            <p style="color: var(--text-secondary); font-size: 1.05rem; max-width: 500px; margin: 0 auto 2rem auto; line-height: 1.6;">
+                Your submission for <strong style="color: #fff;" th:text="${survey.title}">the survey</strong> has been recorded and safely aggregated into the real-time analytics engine.
+            </p>
+
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a th:href="@{'/admin/surveys/' + ${survey.id} + '/results'}" class="btn btn-primary" id="btn-view-results">
+                    📊 View Real-Time Analytics
+                </a>
+                <a th:href="@{/}" class="btn btn-secondary">
+                    Explore Other Surveys &rarr;
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 SurveySphere &bull; Spring Boot 3 &bull; Chart.js</p>
+    </footer>
+</body>
+</html>

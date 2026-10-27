@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Survey System | Public Portal</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-container">
+            <a th:href="@{/}" class="brand">
+                <span class="brand-badge">S</span>
+                <span>SurveySphere</span>
+            </a>
+            <ul class="nav-links">
+                <li><a th:href="@{/}" class="nav-link active">Surveys</a></li>
+                <li><a th:href="@{/admin}" class="nav-link">Admin Console</a></li>
+                <li><a th:href="@{/admin/surveys/new}" class="btn btn-primary btn-sm">+ Create Survey</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <div class="hero-pill">⚡ Community Feedback &amp; Interactive Analytics</div>
+            <h1 class="hero-title">Real-Time Insights, Built on Spring Boot</h1>
+            <p class="hero-subtitle">
+                Explore active community polls, voice your thoughts, and inspect automated visualizations powered by Spring Data JPA and Chart.js.
+            </p>
+        </section>
+
+        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+        <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <h2 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700;">Active Surveys</h2>
+            <span style="color: var(--text-secondary); font-size: 0.9rem;" th:text="${surveys.size() + ' Surveys Available'}">2 Surveys Available</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem;">
+            <div th:each="survey : ${surveys}" class="card card-interactive" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+                        <span th:if="${survey.active}" class="badge badge-active">Active</span>
+                        <span th:unless="${survey.active}" class="badge badge-closed">Closed</span>
+                        <span style="color: var(--text-muted); font-size: 0.8rem;" th:text="${#temporals.format(survey.createdAt, 'MMM dd, yyyy')}">Oct 27, 2026</span>
+                    </div>
+
+                    <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 0.6rem; color: #fff;" th:text="${survey.title}">
+                        Developer Ecosystem Survey
+                    </h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.25rem; line-height: 1.5;" th:text="${survey.description}">
+                        Gathering insights on modern Java frameworks.
+                    </p>
+                </div>
+
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid var(--border-glass); margin-bottom: 1rem;">
+                        <span style="font-size: 0.85rem; color: var(--text-secondary);">
+                            <strong style="color: #fff;" th:text="${survey.questions.size()}">4</strong> Questions
+                        </span>
+                        <span style="font-size: 0.85rem; color: var(--text-secondary);">
+                            <strong style="color: #fff;" th:text="${survey.responseCount}">12</strong> Responses
+                        </span>
+                    </div>
+
+                    <div style="display: flex; gap: 0.75rem;">
+                        <a th:if="${survey.active}" th:href="@{'/survey/' + ${survey.slug}}" class="btn btn-primary btn-block btn-sm">
+                            Take Survey &rarr;
+                        </a>
+                        <span th:unless="${survey.active}" class="btn btn-secondary btn-block btn-sm" style="cursor: not-allowed; opacity: 0.6;">
+                            Survey Closed
+                        </span>
+                        <a th:href="@{'/admin/surveys/' + ${survey.id} + '/results'}" class="btn btn-secondary btn-sm" title="View Results">
+                            Results
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 SurveySphere &bull; Spring Boot 3 &bull; Spring Data JPA &bull; H2 &bull; Chart.js</p>
+    </footer>
+</body>
+</html>
