@@ -41,10 +41,10 @@
         <exec-maven-plugin.version>3.4.1</exec-maven-plugin.version>
     </properties>
 
-    <!-- Sub-modules will be registered here as each project is developed -->
+    <!-- Sub-modules registered here as each project is developed -->
     <modules>
-        <!--
         <module>01-password-generator</module>
+        <!--
         <module>02-word-count-tool</module>
         <module>03-snake-game</module>
         <module>04-electricity-bill-system</module>

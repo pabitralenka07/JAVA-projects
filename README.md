@@ -26,7 +26,7 @@ Every project adheres to production coding standards: clean package separation (
 
 | # | Project Name | Tech Stack | Difficulty | Status | Folder Link |
 |---|--------------|------------|:----------:|:------:|-------------|
-| 1 | **Password Generator** | Java Swing, `SecureRandom`, System Clipboard API | Beginner | ⏳ Not started | [`01-password-generator`](file:///Users/pabitra/Downloads/JAVA_Projects/01-password-generator) |
+| 1 | **Password Generator** | Java Swing, `SecureRandom`, System Clipboard API | Beginner | ✅ Done | [`01-password-generator`](file:///Users/pabitra/Downloads/JAVA_Projects/01-password-generator) |
 | 2 | **Word Count Tool** | CLI + Swing GUI, Java NIO, `HashMap`, Frequency Sorting | Beginner | ⏳ Not started | [`02-word-count-tool`](file:///Users/pabitra/Downloads/JAVA_Projects/02-word-count-tool) |
 | 3 | **Snake Game** | Java 2D Graphics, Swing `Timer`, Key Bindings, File I/O | Beginner | ⏳ Not started | [`03-snake-game`](file:///Users/pabitra/Downloads/JAVA_Projects/03-snake-game) |
 | 4 | **Electricity Bill System** | JDBC, H2/MySQL, Slab Tariff Logic, OpenPDF Bill Generation | Intermediate | ⏳ Not started | [`04-electricity-bill-system`](file:///Users/pabitra/Downloads/JAVA_Projects/04-electricity-bill-system) |
