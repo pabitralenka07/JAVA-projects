@@ -28,7 +28,7 @@ Every project adheres to production coding standards: clean package separation (
 |---|--------------|------------|:----------:|:------:|-------------|
 | 1 | **Password Generator** | Java Swing, `SecureRandom`, System Clipboard API | Beginner | ✅ Done | [`01-password-generator`](file:///Users/pabitra/Downloads/JAVA_Projects/01-password-generator) |
 | 2 | **Word Count Tool** | CLI + Swing GUI, Java NIO, `HashMap`, Frequency Sorting | Beginner | ✅ Done | [`02-word-count-tool`](file:///Users/pabitra/Downloads/JAVA_Projects/02-word-count-tool) |
-| 3 | **Snake Game** | Java 2D Graphics, Swing `Timer`, Key Bindings, File I/O | Beginner | ⏳ Not started | [`03-snake-game`](file:///Users/pabitra/Downloads/JAVA_Projects/03-snake-game) |
+| 3 | **Snake Game** | Java 2D Graphics, Swing `Timer`, Key Bindings, File I/O | Beginner | ✅ Done | [`03-snake-game`](file:///Users/pabitra/Downloads/JAVA_Projects/03-snake-game) |
 | 4 | **Electricity Bill System** | JDBC, H2/MySQL, Slab Tariff Logic, OpenPDF Bill Generation | Intermediate | ⏳ Not started | [`04-electricity-bill-system`](file:///Users/pabitra/Downloads/JAVA_Projects/04-electricity-bill-system) |
 | 5 | **Exam Seating Arrangement** | Graph/Matrix DSA, Constraint Solver, CSV & PDF Export | Intermediate | ⏳ Not started | [`05-exam-seating-arrangement`](file:///Users/pabitra/Downloads/JAVA_Projects/05-exam-seating-arrangement) |
 | 6 | **Online Survey System** | Spring Boot, Thymeleaf, Spring Data JPA, Chart.js Visuals | Intermediate | ⏳ Not started | [`06-online-survey-system`](file:///Users/pabitra/Downloads/JAVA_Projects/06-online-survey-system) |
