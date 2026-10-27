@@ -1,6 +1,7 @@
 # Java Projects Portfolio: 10 Production-Ready Systems
 
 [![Java CI Multi-Module Build](https://github.com/pabitra/java-projects/actions/workflows/build.yml/badge.svg)](https://github.com/pabitra/java-projects/actions/workflows/build.yml)
+[![Tests: 117 Passed](https://img.shields.io/badge/Tests-117%20Passed-10B981.svg)](PROGRESS.md)
 [![Java Version](https://img.shields.io/badge/Java-17%2B-orange.svg)](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 [![Build Tool](https://img.shields.io/badge/Maven-3.9%2B-C71A36.svg)](https://maven.apache.org/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3%2B-6DB33F.svg)](https://spring.io/projects/spring-boot)
@@ -24,18 +25,18 @@ Every project adheres to production coding standards: clean package separation (
 
 ## 🚀 Projects Overview
 
-| # | Project Name | Tech Stack | Difficulty | Status | Folder Link |
-|---|--------------|------------|:----------:|:------:|-------------|
-| 1 | **Password Generator** | Java Swing, `SecureRandom`, System Clipboard API | Beginner | ✅ Done | [`01-password-generator`](file:///Users/pabitra/Downloads/JAVA_Projects/01-password-generator) |
-| 2 | **Word Count Tool** | CLI + Swing GUI, Java NIO, `HashMap`, Frequency Sorting | Beginner | ✅ Done | [`02-word-count-tool`](file:///Users/pabitra/Downloads/JAVA_Projects/02-word-count-tool) |
-| 3 | **Snake Game** | Java 2D Graphics, Swing `Timer`, Key Bindings, File I/O | Beginner | ✅ Done | [`03-snake-game`](file:///Users/pabitra/Downloads/JAVA_Projects/03-snake-game) |
-| 4 | **Electricity Bill System** | JDBC, H2/MySQL, Slab Tariff Logic, OpenPDF Bill Generation | Intermediate | ✅ Done | [`04-electricity-bill-system`](file:///Users/pabitra/Downloads/JAVA_Projects/04-electricity-bill-system) |
-| 5 | **Exam Seating Arrangement** | Graph/Matrix DSA, Constraint Solver, CSV & PDF Export | Intermediate | ✅ Done | [`05-exam-seating-arrangement`](file:///Users/pabitra/Downloads/JAVA_Projects/05-exam-seating-arrangement) |
-| 6 | **Online Survey System** | Spring Boot, Thymeleaf, Spring Data JPA, Chart.js Visuals | Intermediate | ⏳ Not started | [`06-online-survey-system`](file:///Users/pabitra/Downloads/JAVA_Projects/06-online-survey-system) |
-| 7 | **Online Resume Builder** | Spring Boot, Thymeleaf, Form Model Validation, OpenPDF | Intermediate | ⏳ Not started | [`07-online-resume-builder`](file:///Users/pabitra/Downloads/JAVA_Projects/07-online-resume-builder) |
-| 8 | **Medical Management System** | Spring Boot, Spring Security (RBAC), JPA, BCrypt, H2/MySQL | Advanced | ⏳ Not started | [`08-medical-management-system`](file:///Users/pabitra/Downloads/JAVA_Projects/08-medical-management-system) |
-| 9 | **ISP Automation System** | Spring Boot, JPA, `@Scheduled` Billing Invoices, Ticketing | Advanced | ⏳ Not started | [`09-isp-automation`](file:///Users/pabitra/Downloads/JAVA_Projects/09-isp-automation) |
-| 10 | **Face Detection Application** | JavaCV / OpenCV, Haar Cascades, Ethical Privacy Framework | Advanced | ⏳ Not started | [`10-face-detection`](file:///Users/pabitra/Downloads/JAVA_Projects/10-face-detection) |
+| # | Project Name | Tech Stack | Difficulty | Status | Folder Link | Preview |
+|---|--------------|------------|:----------:|:------:|-------------|:-------:|
+| 1 | **Password Generator** | Java Swing, `SecureRandom`, Clipboard API | Beginner | ✅ Done | [`01-password-generator`](file:///Users/pabitra/Downloads/JAVA_Projects/01-password-generator) | [SVG Preview](file:///Users/pabitra/Downloads/JAVA_Projects/docs/screenshots/01-password-generator-preview.svg) |
+| 2 | **Word Count Tool** | CLI + Swing GUI, Java NIO, `HashMap`, Frequency Sorting | Beginner | ✅ Done | [`02-word-count-tool`](file:///Users/pabitra/Downloads/JAVA_Projects/02-word-count-tool) | [SVG Preview](file:///Users/pabitra/Downloads/JAVA_Projects/docs/screenshots/02-word-count-tool-preview.svg) |
+| 3 | **Snake Game** | Java 2D Graphics, Swing `Timer`, Key Bindings, File I/O | Beginner | ✅ Done | [`03-snake-game`](file:///Users/pabitra/Downloads/JAVA_Projects/03-snake-game) | [SVG Preview](file:///Users/pabitra/Downloads/JAVA_Projects/docs/screenshots/03-snake-game-preview.svg) |
+| 4 | **Electricity Bill System** | JDBC, H2/MySQL, Slab Tariff Logic, OpenPDF Generation | Intermediate | ✅ Done | [`04-electricity-bill-system`](file:///Users/pabitra/Downloads/JAVA_Projects/04-electricity-bill-system) | [SVG Preview](file:///Users/pabitra/Downloads/JAVA_Projects/docs/screenshots/04-electricity-bill-preview.svg) |
+| 5 | **Exam Seating Arrangement** | Graph/Matrix DSA, Constraint Solver, CSV & PDF Export | Intermediate | ✅ Done | [`05-exam-seating-arrangement`](file:///Users/pabitra/Downloads/JAVA_Projects/05-exam-seating-arrangement) | [SVG Preview](file:///Users/pabitra/Downloads/JAVA_Projects/docs/screenshots/05-exam-seating-preview.svg) |
+| 6 | **Online Survey System** | Spring Boot, Thymeleaf, Spring Data JPA, Chart.js Visuals | Intermediate | ✅ Done | [`06-online-survey-system`](file:///Users/pabitra/Downloads/JAVA_Projects/06-online-survey-system) | [SVG Preview](file:///Users/pabitra/Downloads/JAVA_Projects/docs/screenshots/06-online-survey-preview.svg) |
+| 7 | **Online Resume Builder** | Spring Boot, Thymeleaf, Form Validation, OpenPDF Export | Intermediate | ✅ Done | [`07-online-resume-builder`](file:///Users/pabitra/Downloads/JAVA_Projects/07-online-resume-builder) | [SVG Preview](file:///Users/pabitra/Downloads/JAVA_Projects/docs/screenshots/07-online-resume-preview.svg) |
+| 8 | **Medical Management System** | Spring Boot, Spring Security (RBAC), JPA, BCrypt, H2/MySQL | Advanced | ✅ Done | [`08-medical-management-system`](file:///Users/pabitra/Downloads/JAVA_Projects/08-medical-management-system) | [SVG Preview](file:///Users/pabitra/Downloads/JAVA_Projects/docs/screenshots/08-medical-management-preview.svg) |
+| 9 | **ISP Automation System** | Spring Boot, JPA, `@Scheduled` Billing Invoices, Ticketing | Advanced | ✅ Done | [`09-isp-automation`](file:///Users/pabitra/Downloads/JAVA_Projects/09-isp-automation) | [SVG Preview](file:///Users/pabitra/Downloads/JAVA_Projects/docs/screenshots/09-isp-automation-preview.svg) |
+| 10 | **Face Detection Application** | JavaCV / OpenCV, Haar Cascades, Ethical AI Framework | Advanced | ✅ Done | [`10-face-detection`](file:///Users/pabitra/Downloads/JAVA_Projects/10-face-detection) | [SVG Preview](file:///Users/pabitra/Downloads/JAVA_Projects/docs/screenshots/10-face-detection-preview.svg) |
 
 ---
 
@@ -93,6 +94,14 @@ mvn spring-boot:run -Dspring-boot.run.profiles=mysql
 - **Security First**: BCrypt password hashing, parameter binding against SQL injection, strict input sanitization.
 - **Automated CI**: GitHub Actions runs on every push and PR against JDK 17 to ensure continuous build health.
 - **Strict Testing**: Each module contains at least 5 meaningful JUnit 5 tests exercising real domain logic.
+
+---
+
+## 💼 Recruiter & Career Assets
+- 📄 **[Resume Bullets (Google X-Y-Z Formula)](PORTFOLIO_GUIDE.md#1-resume-bullet-points-google-x-y-z-formula)**: 20 quantified bullet points for your software engineering resume.
+- 🏷️ **[GitHub Topics & Description](PORTFOLIO_GUIDE.md#2-recommended-github-repository-topics--tags)**: Recommended SEO tags and repository description.
+- 📌 **[Pinned Repository Strategy](PORTFOLIO_GUIDE.md#4-top-34-projects-to-pin-on-github-profile)**: Recommended top 3-4 projects to feature on your GitHub profile.
+- 🧠 **[Interview Revision Master List](PORTFOLIO_GUIDE.md#5-comprehensive-interview-revision-list)**: Core Java, OOP, DSA, JPA, Spring Boot, Security, and Computer Vision interview concepts.
 
 ---
 
