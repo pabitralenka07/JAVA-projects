@@ -1,0 +1,176 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 680" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="panelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#161f30"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="primaryBtn" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#4f46e5"/>
+    </linearGradient>
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <filter id="boxGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="hudShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="680" rx="16" fill="url(#bgGrad)"/>
+  <rect width="1100" height="680" rx="16" fill="none" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Window Header Bar -->
+  <rect width="1100" height="52" rx="16" fill="#18181b"/>
+  <rect y="40" width="1100" height="12" fill="#18181b"/>
+  <line x1="0" y1="52" x2="1100" y2="52" stroke="#334155" stroke-width="1"/>
+
+  <!-- macOS Window Controls -->
+  <circle cx="28" cy="26" r="6.5" fill="#ef4444"/>
+  <circle cx="48" cy="26" r="6.5" fill="#f59e0b"/>
+  <circle cx="68" cy="26" r="6.5" fill="#10b981"/>
+
+  <!-- Title & Subtitle -->
+  <text x="100" y="24" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="700">👁️ Computer Vision Face Detection Studio</text>
+  <text x="100" y="42" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11">JavaCV 1.5.10 &amp; OpenCV 4.9.0 Haar Cascade MultiScale Classifier</text>
+
+  <!-- Ethical AI Banner Tag -->
+  <rect x="760" y="14" width="316" height="26" rx="13" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+  <text x="774" y="31" fill="#34d399" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600">🛡️ 100% Edge Processing | No Biometrics Stored</text>
+
+  <!-- Center Image Canvas (Left: x=24, y=70, w=720, h=540) -->
+  <rect x="24" y="70" width="720" height="540" rx="12" fill="#090d16" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Simulated Image Background Portrait Representation -->
+  <g transform="translate(144, 90)">
+    <rect width="480" height="480" rx="8" fill="#1e293b"/>
+    <!-- Stylized Portrait Silhouettes -->
+    <circle cx="240" cy="180" r="85" fill="#334155"/>
+    <path d="M 120 440 C 120 310, 360 310, 360 440 Z" fill="#334155"/>
+    <circle cx="240" cy="175" r="70" fill="#475569"/>
+    <!-- Eyes and Mouth hint -->
+    <ellipse cx="215" cy="165" rx="8" ry="5" fill="#64748b"/>
+    <ellipse cx="265" cy="165" rx="8" ry="5" fill="#64748b"/>
+    <path d="M 225 205 Q 240 220 255 205" stroke="#64748b" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+    <!-- Detected Face Bounding Box Glow -->
+    <rect x="135" y="85" width="210" height="210" rx="8" fill="none" stroke="#10b981" stroke-width="8" opacity="0.3" filter="url(#boxGlow)"/>
+    <!-- Crisp Primary Box -->
+    <rect x="135" y="85" width="210" height="210" rx="8" fill="none" stroke="#10b981" stroke-width="3"/>
+
+    <!-- Target Corner Accents -->
+    <path d="M 135 115 L 135 85 L 165 85" fill="none" stroke="#10b981" stroke-width="4" stroke-linecap="square"/>
+    <path d="M 315 85 L 345 85 L 345 115" fill="none" stroke="#10b981" stroke-width="4" stroke-linecap="square"/>
+    <path d="M 135 265 L 135 295 L 165 295" fill="none" stroke="#10b981" stroke-width="4" stroke-linecap="square"/>
+    <path d="M 315 295 L 345 295 L 345 265" fill="none" stroke="#10b981" stroke-width="4" stroke-linecap="square"/>
+
+    <!-- Face Label Badge -->
+    <rect x="135" y="55" width="140" height="24" rx="6" fill="#0f172a" stroke="#10b981" stroke-width="1"/>
+    <text x="146" y="71" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700">Face #1 (174x174)</text>
+
+    <!-- Center Reticle crosshair -->
+    <circle cx="240" cy="190" r="14" fill="none" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3,3"/>
+    <circle cx="240" cy="190" r="3" fill="#10b981"/>
+  </g>
+
+  <!-- HUD Telemetry Overlay on Canvas (Top Left) -->
+  <g transform="translate(42, 88)" filter="url(#hudShadow)">
+    <rect width="360" height="42" rx="8" fill="#0f172a" opacity="0.9" stroke="#6366f1" stroke-width="1.2"/>
+    <circle cx="24" cy="21" r="5" fill="#10b981"/>
+    <text x="38" y="26" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700">⚡ OpenCV Haar Cascade | Faces: 1 | Latency: 150ms</text>
+  </g>
+
+  <!-- Right Sidebar Panel (x=760, y=70, w=316, h=540) -->
+  <rect x="760" y="70" width="316" height="540" rx="12" fill="url(#panelGrad)" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Card 1: Controls -->
+  <g transform="translate(776, 86)">
+    <rect width="284" height="140" rx="8" fill="url(#cardGrad)" stroke="#475569" stroke-width="1"/>
+    <text x="12" y="22" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700">ACTIONS &amp; CONTROLS</text>
+
+    <!-- Load Sample Button -->
+    <rect x="12" y="34" width="260" height="28" rx="6" fill="url(#primaryBtn)"/>
+    <text x="80" y="52" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700">⚡ Load Sample Portrait</text>
+
+    <!-- Open Custom Image Button -->
+    <rect x="12" y="68" width="260" height="28" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+    <text x="76" y="86" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600">📂 Open Custom Image...</text>
+
+    <!-- Save Result Button -->
+    <rect x="12" y="102" width="260" height="28" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+    <text x="74" y="120" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600">💾 Save Annotated Result...</text>
+  </g>
+
+  <!-- Card 2: Tuning Sliders -->
+  <g transform="translate(776, 238)">
+    <rect width="284" height="136" rx="8" fill="url(#cardGrad)" stroke="#475569" stroke-width="1"/>
+    <text x="12" y="20" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700">CASCADE PARAMETERS</text>
+
+    <!-- Scale Factor -->
+    <text x="12" y="42" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10">Scale Factor</text>
+    <text x="244" y="42" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700">1.10x</text>
+    <rect x="12" y="48" width="260" height="4" rx="2" fill="#1e293b"/>
+    <rect x="12" y="48" width="60" height="4" rx="2" fill="#6366f1"/>
+    <circle cx="72" cy="50" r="6" fill="#6366f1"/>
+
+    <!-- Min Neighbors -->
+    <text x="12" y="74" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10">Min Neighbors</text>
+    <text x="258" y="74" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700">4</text>
+    <rect x="12" y="80" width="260" height="4" rx="2" fill="#1e293b"/>
+    <rect x="12" y="80" width="104" height="4" rx="2" fill="#6366f1"/>
+    <circle cx="116" cy="82" r="6" fill="#6366f1"/>
+
+    <!-- Min Size -->
+    <text x="12" y="106" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10">Min Size</text>
+    <text x="246" y="106" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700">30px</text>
+    <rect x="12" y="112" width="260" height="4" rx="2" fill="#1e293b"/>
+    <rect x="12" y="112" width="70" height="4" rx="2" fill="#6366f1"/>
+    <circle cx="82" cy="114" r="6" fill="#6366f1"/>
+  </g>
+
+  <!-- Card 3: Inference Telemetry -->
+  <g transform="translate(776, 386)">
+    <rect width="284" height="90" rx="8" fill="url(#cardGrad)" stroke="#475569" stroke-width="1"/>
+    <text x="12" y="20" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700">INFERENCE TELEMETRY</text>
+
+    <text x="12" y="44" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11">Status:</text>
+    <rect x="160" y="30" width="112" height="20" rx="4" fill="url(#emeraldGrad)"/>
+    <text x="174" y="44" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700">Detected 1 Face</text>
+
+    <text x="12" y="66" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11">Latency:</text>
+    <text x="238" y="66" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700">150 ms</text>
+
+    <text x="12" y="84" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11">Resolution:</text>
+    <text x="206" y="84" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700">512 × 512 px</text>
+  </g>
+
+  <!-- Card 4: Detected Bounding Boxes -->
+  <g transform="translate(776, 488)">
+    <rect width="284" height="110" rx="8" fill="url(#cardGrad)" stroke="#475569" stroke-width="1"/>
+    <text x="12" y="20" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700">DETECTED INSTANCES</text>
+
+    <rect x="12" y="32" width="260" height="66" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="52" fill="#34d399" font-family="Monaco, 'Courier New', monospace" font-size="11">Face #1: [216, 202]</text>
+    <text x="20" y="70" fill="#94a3b8" font-family="Monaco, 'Courier New', monospace" font-size="11">Dim: 174x174 px</text>
+    <text x="20" y="86" fill="#64748b" font-family="Monaco, 'Courier New', monospace" font-size="10">Area: 30,276 px² (Confidence: 1.0)</text>
+  </g>
+
+  <!-- Footer Status Bar -->
+  <rect x="0" y="632" width="1100" height="48" rx="0" fill="#090d16"/>
+  <line x1="0" y1="632" x2="1100" y2="632" stroke="#334155" stroke-width="1"/>
+  <text x="24" y="660" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11">Model: haarcascade_frontalface_default.xml | Bounded Rects: Transformed to Java2D Graphics</text>
+  <text x="800" y="660" fill="#10b981" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700">Zero Network Transmissions | Sub-5-min clone-and-run</text>
+</svg>
