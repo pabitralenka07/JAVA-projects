@@ -42,6 +42,8 @@ Every project adheres to production coding standards: clean package separation (
 
 ## ⚡ How to Run Any Project (In Under 5 Minutes)
 
+> 💡 **Quick Reference**: See **[RUN.md](RUN.md)** for a cheat sheet of run commands for all 10 projects.
+
 ### Prerequisites
 - **JDK 17 or higher** (`java -version`)
 - **Maven 3.8+** (`mvn -version`)
