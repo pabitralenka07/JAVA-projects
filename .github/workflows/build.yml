@@ -15,10 +15,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Install Native Dependencies (OpenCV & Headless Graphics)
+      - name: Install OpenCV & GTK Native Dependencies
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends libgl1 libglib2.0-0 libfontconfig1
+          sudo apt-get install -y --no-install-recommends libgl1 libglib2.0-0 libfontconfig1 libgtk-3-0 || true
+          sudo apt-get install -y --no-install-recommends libgtk2.0-0 || true
 
       - name: Set up Java 17
         uses: actions/setup-java@v4
