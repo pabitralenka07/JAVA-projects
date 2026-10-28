@@ -4,7 +4,7 @@
 [![OpenCV 4.9.0](https://img.shields.io/badge/OpenCV-4.9.0-5C3EE8?style=flat&logo=opencv&logoColor=white)](https://opencv.org/)
 [![JavaCV 1.5.10](https://img.shields.io/badge/JavaCV-1.5.10-FF6F00?style=flat)](https://github.com/bytedeco/javacv)
 [![Swing GUI](https://img.shields.io/badge/UI-Swing%20Dark%20Theme-blue?style=flat)](https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/javax/swing/package-summary.html)
-[![Ethical AI](https://img.shields.io/badge/Ethics-Local%20Edge%20Processing-10B981?style=flat)](https://github.com/pabitra/java-projects)
+[![Ethical AI](https://img.shields.io/badge/Ethics-Local%20Edge%20Processing-10B981?style=flat)](https://github.com/pabitralenka07/JAVA-projects)
 [![Build & Tests](https://img.shields.io/badge/Tests-6%20Passed-10B981?style=flat&logo=junit5&logoColor=white)](https://junit.org/junit5/)
 
 An edge-native, real-time Computer Vision application written in Java that performs multi-scale human face detection using **JavaCV 1.5.10** bindings and the official **OpenCV 4.9.0 Haar Feature-based Cascade Classifier**. Features a modern dark-mode Swing desktop GUI, automated CLI batch runner, and a foundational **Ethical AI & Privacy Framework** guaranteeing local edge computation and zero biometric data retention.

@@ -1,6 +1,6 @@
 # 🚀 Java Projects Portfolio: 10 Production-Ready Systems
 
-[![Java CI Multi-Module Build](https://github.com/pabitra/java-projects/actions/workflows/build.yml/badge.svg)](https://github.com/pabitra/java-projects/actions/workflows/build.yml)
+[![Java CI Multi-Module Build](https://github.com/pabitralenka07/JAVA-projects/actions/workflows/build.yml/badge.svg)](https://github.com/pabitralenka07/JAVA-projects/actions/workflows/build.yml)
 [![Tests: 117 Passed](https://img.shields.io/badge/Tests-117%20Passed%20(100%25)-10B981.svg?style=flat&logo=junit5&logoColor=white)](PROGRESS.md)
 [![Java Version](https://img.shields.io/badge/Java-17%20LTS-007396.svg?style=flat&logo=openjdk&logoColor=white)](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3%2B-6DB33F.svg?style=flat&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
@@ -108,7 +108,7 @@ I am a 3rd-year B.Tech CS undergraduate preparing for **Software Engineering** a
 
 ### 1. Clone & Verify All 117 Tests
 ```bash
-git clone https://github.com/pabitra/java-projects.git
+git clone https://github.com/pabitralenka07/JAVA-projects.git
 cd java-projects
 
 # Run all 117 tests across all 10 modules (runs in ~19 seconds)
